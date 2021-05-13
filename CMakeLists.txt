@@ -5,7 +5,7 @@ project (SAPER)
 #####################################################################
 # Tu wymień wszystkie pliki .cpp, z których składa się projekt (rozdzielone spacją)
 
-set ( SOURCES main.cpp  Pacman.cpp)
+set ( SOURCES main.cpp  Pacman.cpp Coronavirus.cpp)
 
 #####################################################################
 

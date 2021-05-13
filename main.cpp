@@ -2,6 +2,7 @@
 #include "SFML/Window.hpp"
 #include <iostream>
 #include "Pacman.h"
+#include "Coronavirus.h"
 
 
 
