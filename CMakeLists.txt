@@ -1,11 +1,11 @@
 cmake_minimum_required (VERSION 3.10)
   
-project (SAPER)
+project (PACMAN)
 
 #####################################################################
 # Tu wymień wszystkie pliki .cpp, z których składa się projekt (rozdzielone spacją)
 
-set ( SOURCES main.cpp  Pacman.cpp Coronavirus.cpp)
+set ( SOURCES main.cpp  Pacman.cpp Coronavirus.cpp Board.cpp Manager.cpp)
 
 #####################################################################
 

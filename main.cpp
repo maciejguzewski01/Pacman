@@ -3,6 +3,8 @@
 #include <iostream>
 #include "Pacman.h"
 #include "Coronavirus.h"
+#include "Board.h"
+#include "Manager.h"
 
 
 
