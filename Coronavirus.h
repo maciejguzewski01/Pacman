@@ -20,6 +20,8 @@ class Coronavirus
   void move(Move_direction direction);
   sf::Vector2f get_next_field_location(Move_direction direction);
   
+  void set_position_to(int row,int col);
+  
 
 };
 

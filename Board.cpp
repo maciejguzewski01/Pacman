@@ -3,6 +3,8 @@
 //konstruktor 
 Board::Board(Pacman & pacman_b, Level_name level): pacman_b(pacman_b),level(level)
 {
+    virues_speed=0.2;
+    
     generate_viruses();
     generate_walls();
     generate_vaccines();
@@ -21,6 +23,7 @@ void Board::generate_viruses()
     for(int i=0;i<number;i++)
     {
         viruses.push_back(Coronavirus(i));
+        
     } 
 }
 
@@ -114,6 +117,8 @@ bool Board::can_pacman_move(Move_direction direction)
   if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
   if(fields[row][col].has_wall) return false;
 
+  pacman_b.move(direction);
+
   return true;
 }
 
@@ -128,6 +133,8 @@ bool Board::can_virus_move(int number,Move_direction direction)
 
   if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
   if(fields[row][col].has_wall) return false;
+
+  viruses[number].move(direction);
 
   return true;
 }
@@ -177,4 +184,36 @@ bool Board::is_any_virus_on_field(int row,int col)
 sf::Vector2f Board::get_position_of_virus_number(int number)
 {
    return viruses[number].get_position();
+}
+
+
+
+//usuwa szczepionkę z pola
+void Board::vaccinate(int row,int col)
+{
+    fields[row][col].has_vaccine=false;
+}
+
+//zwraca ilość wirusów na planszy
+int Board::get_number_of_viruses()
+{
+   int size=viruses.size();
+   return size;
+}
+
+//resetuje stan planszy (pozycję wirusów i pacmana) 
+void Board::reset()
+{
+      pacman_b.set_position_to(1,1);
+      for(int i=0;i<get_number_of_viruses();i++)
+      {
+          viruses[i].set_position_to(15,15+i+1);
+      }
+}
+
+
+//zwraca prędkość wirusów
+double Board::get_viruses_speed()
+{
+    return virues_speed;
 }

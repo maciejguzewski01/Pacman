@@ -17,6 +17,7 @@ enum Level_name {FIRST,SECOND,THIRD};
 
 class Board
 {
+    double virues_speed;
     Pacman & pacman_b;
     Field fields[30][40];
     Level_name level;
@@ -43,6 +44,12 @@ class Board
     bool is_pacman_on_field(int row,int col);
     bool is_any_virus_on_field(int row,int col);
     sf::Vector2f get_position_of_virus_number(int number);
+    int get_number_of_viruses();
+    
+    void vaccinate(int row,int col);
+    void reset();
+
+    double get_viruses_speed();
 };
 
 

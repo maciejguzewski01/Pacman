@@ -15,7 +15,7 @@ void Coronavirus::move(Move_direction direction)
     else if(direction==SOUTH) position=position+sf::Vector2f(1,0);
     else if(direction==WEST) position=position+sf::Vector2f(0,-1);
     else if(direction==EAST) position=position+sf::Vector2f(0,1);
-    exit(-1);
+    else exit(-1);
 }
 
 
@@ -31,6 +31,13 @@ sf::Vector2f Coronavirus::get_next_field_location(Move_direction direction)
     if(direction==NORTH) return position+sf::Vector2f(-1,0);
     else if(direction==SOUTH) return position+sf::Vector2f(1,0);
     else if(direction==WEST) return position+sf::Vector2f(0,-1);
-    else if(direction==EAST) position+sf::Vector2f(0,1);
+    else if(direction==EAST) return position+sf::Vector2f(0,1);
     exit(-1);
+}
+
+
+//ustawia wirusa na danej pozycji
+void Coronavirus::set_position_to(int row,int col)
+{
+    position=sf::Vector2f(row,col);
 }

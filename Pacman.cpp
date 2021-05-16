@@ -4,6 +4,8 @@
 Pacman::Pacman(std::string name) : name(name)
 {
     position=sf::Vector2f(1,1);
+    lives=3;
+    speed=0.2;
 }
 
 
@@ -13,7 +15,7 @@ void Pacman::move(Move_direction direction)
     if(direction==NORTH) position=position+sf::Vector2f(-1,0);
     else if(direction==SOUTH) position=position+sf::Vector2f(1,0);
     else if(direction==WEST) position=position+sf::Vector2f(0,-1);
-    else position=position+sf::Vector2f(0,1);
+    else if(direction==EAST) position=position+sf::Vector2f(0,1);
 }
 
 //zwraca imię pacmana
@@ -35,5 +37,33 @@ sf::Vector2f Pacman::get_next_field_location(Move_direction direction)
     if(direction==NORTH) return position+sf::Vector2f(-1,0);
     else if(direction==SOUTH) return position+sf::Vector2f(1,0);
     else if(direction==WEST) return position+sf::Vector2f(0,-1);
-    return position+sf::Vector2f(0,1);
+    else if(direction==EAST) return position+sf::Vector2f(0,1);
+    else return position;
+}
+
+
+
+//zwraca ilość pozostałych żyć
+int Pacman::get_lives_number()
+{
+    return lives;
+}
+
+
+//zwraca prędkość pacmana
+double Pacman::get_pacman_speed()
+{
+    return speed;
+}
+
+//zmniejsza ilość żyć
+void Pacman::remove_live()
+{
+    lives--;
+}
+
+//ustawia pacmana na danej pozycji
+void Pacman::set_position_to(int row,int col)
+{
+   position=sf::Vector2f(row,col);
 }

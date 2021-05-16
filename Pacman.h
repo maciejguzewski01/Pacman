@@ -11,6 +11,8 @@ class Pacman
 {
   const std::string name;
   sf::Vector2f position;
+  int lives;
+  double speed;
 
 
   public:
@@ -19,6 +21,11 @@ class Pacman
   sf::Vector2f get_position() const;
   void move(Move_direction direction);
   sf::Vector2f get_next_field_location(Move_direction direction);
+
+  int get_lives_number();
+  double get_pacman_speed();
+  void remove_live();
+  void set_position_to(int row,int col);
 
 };
 

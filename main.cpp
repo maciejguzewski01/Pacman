@@ -5,6 +5,8 @@
 #include "Coronavirus.h"
 #include "Board.h"
 #include "Manager.h"
+#include <cstdlib>
+#include <ctime>
 
 
 
@@ -13,6 +15,7 @@
 
 int main()
 {
+    srand(time(0));
     std::cout<<"HELLO WORLD!"<<std::endl;
   
   return 0;
