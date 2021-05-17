@@ -1,6 +1,7 @@
 #include "Manager.h"
 #include <ctime>
 #include <cstdlib>
+#include <iostream>
 
 
 //konstruktor 
@@ -23,7 +24,7 @@ void Manager::generate_first_directions()
 {
     for(int i=0;i<board_m.get_number_of_viruses();++i)
     {
-        int number=rand()%3;
+        int number=rand()%4;
         if(number==0) viruses_directions[i]=NORTH;
         else if(number==1) viruses_directions[i]=SOUTH;
         else if(number==2) viruses_directions[i]=WEST;
@@ -73,8 +74,8 @@ void Manager::move_pacman(Move_direction direction)
    if(pacman_meet_virus()==true) return;
 
      sf::Vector2f position=pacman_m.get_position();
-     int row=position.y;
-     int col=position.x;
+     int row=position.x;
+     int col=position.y;
      if(board_m.is_vaccine_on_field(row,col)==true)
      {
        score++;
@@ -90,8 +91,8 @@ void Manager::move_pacman(Move_direction direction)
 bool Manager::pacman_meet_virus()
 {
   sf::Vector2f position=pacman_m.get_position();
-  int row=position.y;
-  int col=position.x;
+  int row=position.x;
+  int col=position.y;
   if(board_m.is_any_virus_on_field(row,col)==true)
   {
       pacman_m.remove_live();
@@ -106,17 +107,31 @@ bool Manager::pacman_meet_virus()
 //zarządza ruchem wirusów 
 void Manager::move_viruses( )
 {
+    
    for(int i=0;i<board_m.get_number_of_viruses();++i)
    {     
-       while(board_m.can_virus_move(i,viruses_directions[i])==false)
-       {
-        int number=rand()%3;
+      
+
+      while(board_m.can_virus_move(i,viruses_directions[i])==false)
+      {
+        int number=rand()%4;
         if(number==0) viruses_directions[i]=NORTH;
         else if(number==1) viruses_directions[i]=SOUTH;
         else if(number==2) viruses_directions[i]=WEST;
         else  viruses_directions[i]=EAST;
-       }
-       if(pacman_meet_virus()==true) break;
+      }
+      
+        
+
+       board_m.move_virus(i, viruses_directions[i]);
+        if(pacman_meet_virus()==true) break;
    }
    
+}
+
+
+//zwraca ilość zdobytych punktów
+int Manager::get_score() const
+{
+    return score;
 }

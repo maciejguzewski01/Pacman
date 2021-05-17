@@ -31,6 +31,8 @@ class Manager
   
   void play(Move_direction direction);
 
+  int get_score() const;
+
 };
 
 #endif

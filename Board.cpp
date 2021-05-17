@@ -1,9 +1,20 @@
 #include "Board.h"
+#include <iostream>
 
 //konstruktor 
 Board::Board(Pacman & pacman_b, Level_name level): pacman_b(pacman_b),level(level)
 {
     virues_speed=0.2;
+   
+    for(int row=0;row<=29;++row)
+    {
+        for(int col=0;col<=39;++col)
+        {
+            fields[row][col].has_wall=false;
+            fields[row][col].has_vaccine=false;    
+        }
+    }
+    
     
     generate_viruses();
     generate_walls();
@@ -40,10 +51,12 @@ void Board::generate_walls()
         for(int col=2;col<=37;col++)
         {
             fields[row][col].has_wall=true;
+            
         }
         for(int col=5;col<=35;col=col+5)
         {
             fields[row][col].has_wall=false;
+              
         }
     }
     fields[15][15].has_wall=true;
@@ -51,6 +64,7 @@ void Board::generate_walls()
     for(int i=16;i<=25;i++)
     {
         fields[14][i].has_wall=false;
+        fields[15][i].has_wall=false;
     }
 }
 
@@ -88,14 +102,15 @@ void Board::generate_vaccines()
       {
           if(fields[row][col].has_wall==true ) continue;
           if((row==1)and(col==1)) continue;
-          if((row=15)and(col>=16)and(col<=25)) continue;
+          if((row==15)and(col>=16)and(col<=25)) continue;
           
           fields[row][col].has_vaccine=true;
           total_number_of_vaccine++;
       }
+      
   }
 
-
+ 
 }
 
 
@@ -134,15 +149,21 @@ bool Board::can_virus_move(int number,Move_direction direction)
   if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
   if(fields[row][col].has_wall) return false;
 
-  viruses[number].move(direction);
+  
 
   return true;
 }
 
+//porusza wirusem
+void Board::move_virus(int number, Move_direction direction)
+{
+    viruses[number].move(direction);
+}
 
 //sprawdza czy na danym polu jest ściana
 bool Board::is_wall_on_field(int row,int col)
 {
+ if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
  if(fields[row][col].has_wall==true) return true;
  return false;
 }
@@ -150,6 +171,7 @@ bool Board::is_wall_on_field(int row,int col)
 //sprawdza czy na danym polu jest szczepionka
 bool Board::is_vaccine_on_field(int row,int col)
 {
+    if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
    if(fields[row][col].has_vaccine==true) return true;
    return false;
 }
@@ -157,11 +179,12 @@ bool Board::is_vaccine_on_field(int row,int col)
 //sprawdza czy na danym polu jest pacman
 bool Board::is_pacman_on_field(int row,int col)
 {
+    if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
     sf::Vector2f position;
     position=pacman_b.get_position();
     int x=position.x;
     int y=position.y;
-    if((x==row) and(y==col)) return true;
+    if((x==col) and(y==row)) return true;
     return false;
 
 }
@@ -169,12 +192,13 @@ bool Board::is_pacman_on_field(int row,int col)
 //sprawdza czy na danym polu jest jakikolwiek wirus
 bool Board::is_any_virus_on_field(int row,int col)
 {
+    if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
  for(size_t i=0;i<viruses.size();i++)
  {
      sf::Vector2f position=viruses[i].get_position();
      int x=position.x;
      int y=position.y;
-     if((row==x)and(col==y)) return true;
+     if((col==x)and(row==y)) return true;
  }
 
  return false;
@@ -191,6 +215,7 @@ sf::Vector2f Board::get_position_of_virus_number(int number)
 //usuwa szczepionkę z pola
 void Board::vaccinate(int row,int col)
 {
+    if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
     fields[row][col].has_vaccine=false;
 }
 

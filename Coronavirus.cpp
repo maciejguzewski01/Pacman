@@ -3,7 +3,7 @@
 //konstruktor 
 Coronavirus::Coronavirus(int nr): number(nr)
 {
-    position=sf::Vector2f(15,15+number);//nr wiersza- nr kolumny
+    position=sf::Vector2f(15+number+1,15);//nr wiersza- nr kolumny
 }
 
 
@@ -11,10 +11,10 @@ Coronavirus::Coronavirus(int nr): number(nr)
 //aktualizuje pozycję 
 void Coronavirus::move(Move_direction direction)
 {
-    if(direction==NORTH) position=position+sf::Vector2f(-1,0);
-    else if(direction==SOUTH) position=position+sf::Vector2f(1,0);
-    else if(direction==WEST) position=position+sf::Vector2f(0,-1);
-    else if(direction==EAST) position=position+sf::Vector2f(0,1);
+    if(direction==NORTH) position=position+sf::Vector2f(0,-1);
+    else if(direction==SOUTH) position=position+sf::Vector2f(0,1);
+    else if(direction==WEST) position=position+sf::Vector2f(-1,0);
+    else if(direction==EAST) position=position+sf::Vector2f(1,0);
     else exit(-1);
 }
 
@@ -28,10 +28,10 @@ sf::Vector2f Coronavirus::get_position() const
 //zwraca lokalizację następnego pola na ktorym znajdzie się koronawirus idąc w danym kierunku
 sf::Vector2f Coronavirus::get_next_field_location(Move_direction direction)
 {
-    if(direction==NORTH) return position+sf::Vector2f(-1,0);
-    else if(direction==SOUTH) return position+sf::Vector2f(1,0);
-    else if(direction==WEST) return position+sf::Vector2f(0,-1);
-    else if(direction==EAST) return position+sf::Vector2f(0,1);
+    if(direction==NORTH) return position+sf::Vector2f(0,-1);
+    else if(direction==SOUTH) return position+sf::Vector2f(0,1);
+    else if(direction==WEST) return position+sf::Vector2f(-1,0);
+    else if(direction==EAST) return position+sf::Vector2f(1,0);
     exit(-1);
 }
 
@@ -39,5 +39,6 @@ sf::Vector2f Coronavirus::get_next_field_location(Move_direction direction)
 //ustawia wirusa na danej pozycji
 void Coronavirus::set_position_to(int row,int col)
 {
+    if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
     position=sf::Vector2f(row,col);
 }
