@@ -27,9 +27,9 @@ Board::Board(Pacman & pacman_b, Level_name level): pacman_b(pacman_b),level(leve
 void Board::generate_viruses()
 {
     int number;
-    if(level==FIRST) number=2;
-    else if(level==SECOND) number=3;
-    else number=4;
+    if(level==FIRST) number=5;
+    else if(level==SECOND) number=7;
+    else number=10;
 
     for(int i=0;i<number;i++)
     {
@@ -59,9 +59,9 @@ void Board::generate_walls()
               
         }
     }
-    fields[15][15].has_wall=true;
-    fields[15][26].has_wall=true;
-    for(int i=16;i<=25;i++)
+    fields[15][10].has_wall=true;
+    fields[15][31].has_wall=true;
+    for(int i=11;i<=30;i++)
     {
         fields[14][i].has_wall=false;
         fields[15][i].has_wall=false;
@@ -102,7 +102,7 @@ void Board::generate_vaccines()
       {
           if(fields[row][col].has_wall==true ) continue;
           if((row==1)and(col==1)) continue;
-          if((row==15)and(col>=16)and(col<=25)) continue;
+          if((row==15)and(col>=11)and(col<=30)) continue;
           
           fields[row][col].has_vaccine=true;
           total_number_of_vaccine++;
@@ -126,13 +126,15 @@ bool Board::can_pacman_move(Move_direction direction)
 {
   sf::Vector2f plan;
   plan=pacman_b.get_next_field_location(direction);
-  int row=plan.x;
-  int col=plan.y;
+  int row=plan.y;
+  int col=plan.x;
+  
+ 
 
   if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
   if(fields[row][col].has_wall) return false;
 
-  pacman_b.move(direction);
+  
 
   return true;
 }
@@ -143,11 +145,11 @@ bool Board::can_virus_move(int number,Move_direction direction)
 {
   sf::Vector2f plan;
   plan=viruses[number].get_next_field_location(direction);
-  int row=plan.x;
-  int col=plan.y;
+  int row=plan.y;
+  int col=plan.x;
 
   if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
-  if(fields[row][col].has_wall) return false;
+  if(fields[row][col].has_wall==true) return false;
 
   
 
@@ -159,6 +161,8 @@ void Board::move_virus(int number, Move_direction direction)
 {
     viruses[number].move(direction);
 }
+
+
 
 //sprawdza czy na danym polu jest ściana
 bool Board::is_wall_on_field(int row,int col)
@@ -186,7 +190,7 @@ bool Board::is_pacman_on_field(int row,int col)
     int y=position.y;
     if((x==col) and(y==row)) return true;
     return false;
-
+   
 }
 
 //sprawdza czy na danym polu jest jakikolwiek wirus
@@ -232,7 +236,8 @@ void Board::reset()
       pacman_b.set_position_to(1,1);
       for(int i=0;i<get_number_of_viruses();i++)
       {
-          viruses[i].set_position_to(15,15+i+1);
+          
+          viruses[i].set_position_to(10+i+1,15);
       }
 }
 
@@ -242,3 +247,5 @@ double Board::get_viruses_speed()
 {
     return virues_speed;
 }
+
+

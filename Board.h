@@ -52,6 +52,8 @@ class Board
     double get_viruses_speed();
 
     void move_virus(int number, Move_direction direction);
+
+   
 };
 
 

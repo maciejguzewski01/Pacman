@@ -11,9 +11,13 @@
 
 class Events
 {
-
+   Pacman & pacman_e;
+   Board & board_e;
+   Manager & manager_e;
+   SFMLapp & sfml_e;
   public:
-  Events();
+  Events(Pacman & pacman_e, Board & board_e, Manager & manager_e,SFMLapp & sfml_e);
+  void key_was_pressed(sf::Event event);
   
 };
 

@@ -1,21 +1,25 @@
 #include "Pacman.h"
+#include <iostream>
 
 //konstruktor 
 Pacman::Pacman(std::string name) : name(name)
 {
     position=sf::Vector2f(1,1);
     lives=3;
-    speed=0.2;
+    speed=0.02;
 }
 
 
 //aktualizuje pozycję 
 void Pacman::move(Move_direction direction)
 {
+    
+    
     if(direction==NORTH) position=position+sf::Vector2f(0,-1);
     else if(direction==SOUTH) position=position+sf::Vector2f(0,1);
     else if(direction==WEST) position=position+sf::Vector2f(-1,0);
     else if(direction==EAST) position=position+sf::Vector2f(1,0);
+   
 }
 
 //zwraca imię pacmana

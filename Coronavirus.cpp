@@ -1,9 +1,10 @@
 #include "Coronavirus.h"
+#include <iostream>
 
 //konstruktor 
 Coronavirus::Coronavirus(int nr): number(nr)
 {
-    position=sf::Vector2f(15+number+1,15);//nr wiersza- nr kolumny
+    position=sf::Vector2f(10+number+1,15);//nr wiersza- nr kolumny
 }
 
 
@@ -28,6 +29,7 @@ sf::Vector2f Coronavirus::get_position() const
 //zwraca lokalizację następnego pola na ktorym znajdzie się koronawirus idąc w danym kierunku
 sf::Vector2f Coronavirus::get_next_field_location(Move_direction direction)
 {
+    
     if(direction==NORTH) return position+sf::Vector2f(0,-1);
     else if(direction==SOUTH) return position+sf::Vector2f(0,1);
     else if(direction==WEST) return position+sf::Vector2f(-1,0);

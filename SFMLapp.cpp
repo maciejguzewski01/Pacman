@@ -12,6 +12,7 @@ SFMLapp::SFMLapp(Pacman & pacman_sfml, Board & board_sfml, Manager & manager_sfm
 //funkcja rysująca
 void SFMLapp::draw(sf::RenderWindow & win)
 {
+       
    sf::RectangleShape pacman;
    sf::RectangleShape wall;
    sf::RectangleShape virus;
@@ -31,19 +32,20 @@ void SFMLapp::draw(sf::RenderWindow & win)
   
    for(int row=0;row<30;row++)
   {
+     
       for(int col=0;col<40;col++)
-      {
+      { 
          
          if(board_sfml.is_wall_on_field(row,col))
          {
              wall.setPosition(col*20,row*20);
-             win.draw(wall);
+            win.draw(wall);
              continue;
          }
          else if(board_sfml.is_vaccine_on_field(row,col))
          {
              vaccine.setPosition(col*20,row*20);
-             win.draw(vaccine);
+              win.draw(vaccine);
          }
          
          if(board_sfml.is_any_virus_on_field(row,col))
@@ -62,6 +64,14 @@ void SFMLapp::draw(sf::RenderWindow & win)
       
   }
 
-  manager_sfml.play(ANY);
+ manager_sfml.play(ANY);
+ if(manager_sfml.is_pacman_alive()==false)
+ {
+     sf::RectangleShape r;
+     r.setSize(sf::Vector2f(100,100));
+     r.setPosition(0,0);
+     r.setFillColor(sf::Color::Red);
+     win.draw(r);
+ }
      
 }

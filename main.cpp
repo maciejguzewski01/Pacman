@@ -27,6 +27,8 @@ int main()
 
     SFMLapp sfml_test(pacman_test,board_test,manager_test);
 
+    Events events_test(pacman_test,board_test,manager_test,sfml_test);
+
     std::cout<<"HELLO WORLD!"<<std::endl;
 
 sf::RenderWindow window(sf::VideoMode(800, 600), "TEST");
@@ -42,10 +44,20 @@ window.setFramerateLimit(20);
             {
               window.close();
             }   
+            else if(event.type == sf::Event::KeyPressed) 
+              {
+                events_test.key_was_pressed(event);
+                        
+
+              }
         }    
         window.clear();
+        
         sfml_test.draw(window);
+        
         window.display(); 
+    
+        
     }
   return 0;
 } 
