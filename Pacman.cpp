@@ -7,13 +7,14 @@ Pacman::Pacman(std::string name) : name(name)
     position=sf::Vector2f(1,1);
     lives=3;
     speed=0.02;
+    move_to=SOUTH;
 }
 
 
 //aktualizuje pozycję 
 void Pacman::move(Move_direction direction)
 {
-    
+    move_to=direction;
     
     if(direction==NORTH) position=position+sf::Vector2f(0,-1);
     else if(direction==SOUTH) position=position+sf::Vector2f(0,1);
@@ -71,4 +72,10 @@ void Pacman::set_position_to(int row,int col)
 {
     if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
    position=sf::Vector2f(row,col);
+}
+
+//zwraca kierunek ostatniego ruchu pacmana
+Move_direction Pacman::get_move_to()
+{
+    return move_to;
 }

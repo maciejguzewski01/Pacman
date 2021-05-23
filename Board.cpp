@@ -2,7 +2,7 @@
 #include <iostream>
 
 //konstruktor 
-Board::Board(Pacman & pacman_b, Level_name level): pacman_b(pacman_b),level(level)
+Board::Board(Pacman & pacman_b, Level_name level, Board_order choosed_board): pacman_b(pacman_b),level(level), choosed_board(choosed_board)
 {
     virues_speed=0.2;
    
@@ -39,33 +39,29 @@ void Board::generate_viruses()
 }
 
 
-//generuje ściany 
+//generuje ściany- wywołuje funkcję generującą ściany zewnętrzne, a następnie funkcję genrującą jedną z predefiniowanych planszy (lub generującą losową)
 void Board::generate_walls()
 {
-    //tu umieścić odnośniki do funkcji generujących jeden z wybranych trybów ścian 
-    //na razie tylko jeden predefiniowany typ 
+    
     generate_outside_walls();
 
-    for(int row=2;row<=27;row=row+2)
-    {
-        for(int col=2;col<=37;col++)
-        {
-            fields[row][col].has_wall=true;
-            
-        }
-        for(int col=5;col<=35;col=col+5)
-        {
-            fields[row][col].has_wall=false;
-              
-        }
-    }
-    fields[15][10].has_wall=true;
+    if(choosed_board==RANDOM) generate_random();
+    else if(choosed_board==ONE) generate_one();
+    else if(choosed_board==TWO) generate_two();
+    else if(choosed_board==THREE) generate_three();
+    else if(choosed_board==FOUR) generate_four();
+    else if(choosed_board==FIVE) generate_five();
+
+
+  //kawałek planszy z "bazą" wirusów
+  fields[15][10].has_wall=true;
     fields[15][31].has_wall=true;
     for(int i=11;i<=30;i++)
     {
         fields[14][i].has_wall=false;
         fields[15][i].has_wall=false;
     }
+   
 }
 
 
@@ -88,10 +84,77 @@ void Board::generate_outside_walls()
   for(int col=0;col<40;col++)
   {
     fields[29][col].has_wall=true;
+    fields[28][col].has_wall=true;
   }
 }
 
 
+//generuje planszę jeśli wybrano tryb losowy
+void Board::generate_random()
+{
+  int number_of_walls=rand()%450+10;
+
+  int row,col;
+  int placed_walls=0;
+
+  while(placed_walls!=number_of_walls)
+  {
+      int row,col;
+      row=rand()%27+1;
+      col=rand()%38+1;
+      if(fields[row][col].has_wall==true) continue;
+      if((row==1)and(col==1)) continue;
+      fields[row][col].has_wall=true;
+      placed_walls++;
+  }
+  
+}
+
+//generuje planszę jeśli wybrano tryb jeden
+void Board::generate_one()
+{
+ for(int row=2;row<=27;row=row+2)
+    {
+        for(int col=2;col<=37;col++)
+        {
+            fields[row][col].has_wall=true;
+            
+        }
+        for(int col=5;col<=35;col=col+5)
+        {
+            fields[row][col].has_wall=false;
+              
+        }
+    }
+  
+}
+
+//generuje planszę jeśli wybrano tryb dwa
+void Board::generate_two()
+{
+
+}
+
+
+//generuje planszę jeśli wybrano tryb trzy
+void Board::generate_three()
+{
+
+}
+
+
+//generuje planszę jeśli wybrano tryb cztery
+void Board::generate_four()
+{
+
+}
+
+
+//generuje planszę jeśli wybrano tryb pięć
+void Board::generate_five()
+{
+
+}
 
 //generuje szczepionki
 void Board::generate_vaccines()

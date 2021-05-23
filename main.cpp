@@ -21,7 +21,7 @@ int main()
    
     Pacman pacman_test("nazwa");
    
-    Board board_test(pacman_test,FIRST);
+    Board board_test(pacman_test,FIRST,RANDOM);
    
     Manager manager_test(pacman_test,board_test);
 
@@ -33,7 +33,7 @@ int main()
 
 sf::RenderWindow window(sf::VideoMode(800, 600), "TEST");
 window.setVerticalSyncEnabled(false);
-window.setFramerateLimit(20);
+window.setFramerateLimit(40);
 
      while (window.isOpen())
     {

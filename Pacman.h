@@ -13,7 +13,7 @@ class Pacman
   sf::Vector2f position;
   int lives;
   double speed;
-
+  Move_direction move_to;
 
   public:
   explicit Pacman(std::string name);
@@ -26,6 +26,7 @@ class Pacman
   double get_pacman_speed();
   void remove_live();
   void set_position_to(int row,int col);
+  Move_direction get_move_to();
 
 };
 
