@@ -82,7 +82,7 @@ void SFMLapp::draw_board(sf::RenderWindow & win)
          {
              if(clk.getElapsedTime().asSeconds()>0.1) 
              {
-               pacman_icon_movment();
+              pacman_icon_movment();
                clk.restart();
              }
              pacman.setPosition(col*20-45,row*20-12);
@@ -103,8 +103,8 @@ void SFMLapp::draw_board(sf::RenderWindow & win)
   procent=100*(manager_sfml.get_score())/(board_sfml.get_total_vaccine_number());
   txt.setCharacterSize(25);
   txt.setFillColor(sf::Color::White);
-  txt.setString(L"Zaszczepiłeś ");
-  txt.setPosition(200,560);
+  txt.setString("Zaszczepiono");
+  txt.setPosition(190,560);
   win.draw(txt);
   txt.setString(std::to_string(procent)+"% populacji");
   txt.setPosition(330,560);

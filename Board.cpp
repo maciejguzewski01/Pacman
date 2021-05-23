@@ -51,7 +51,8 @@ void Board::generate_walls()
     else if(choosed_board==THREE) generate_three();
     else if(choosed_board==FOUR) generate_four();
     else if(choosed_board==FIVE) generate_five();
-
+    
+    generate_outside_walls();
 
   //kawałek planszy z "bazą" wirusów
   fields[15][10].has_wall=true;
@@ -132,20 +133,112 @@ void Board::generate_one()
 //generuje planszę jeśli wybrano tryb dwa
 void Board::generate_two()
 {
+    for(int col=2;col<=37;col=col+2)
+    {
+        for(int row=2;row<=27;++row)
+        {
+             fields[row][col].has_wall=true;
+        }
 
+        for(int row=5;row<=26;row=row+5)
+        {
+            fields[row][col].has_wall=false;   
+        }
+    }  
 }
 
 
 //generuje planszę jeśli wybrano tryb trzy
 void Board::generate_three()
 {
+  for(int idx=0;idx<=30;idx=idx+10)
+  {
+    for(int col=idx+2;col<=idx+10;col++)
+    {
+        for(int row=2;row<=10;++row)
+        {
+             fields[row][col].has_wall=true;
+        }
+    }
+    for(int col=idx+3;col<=idx+9;col++)
+    {
+        for(int row=3;row<=9;++row)
+        {
+             fields[row][col].has_wall=false;
+        }
+    }
+   fields[2][idx+8].has_wall=false;
+    
+    for(int col=idx+2;col<=idx+10;col++)
+    {
+        for(int row=12;row<=20;++row)
+        {
+             fields[row][col].has_wall=true;
+        }
+    }
+    for(int col=idx+3;col<=idx+9;col++)
+    {
+        for(int row=13;row<=19;++row)
+        {
+             fields[row][col].has_wall=false;
+        }
+    }
+   fields[12][idx+6].has_wall=false;
 
+    for(int col=idx+2;col<=idx+10;col++)
+    {
+        for(int row=22;row<=26;++row)
+        {
+             fields[row][col].has_wall=true;
+        }
+    }
+    for(int col=idx+3;col<=idx+9;col++)
+    {
+        for(int row=23;row<=25;++row)
+        {
+             fields[row][col].has_wall=false;
+        }
+    }
+   fields[23][idx+2].has_wall=false;
+  }
+  generate_outside_walls();
 }
 
 
 //generuje planszę jeśli wybrano tryb cztery
 void Board::generate_four()
 {
+ for(int idx=0;idx<=10;idx=idx+2)
+ {
+     for(int row=2+idx;row<27-idx;row++)
+    {
+      fields[row][2+idx].has_wall=true;
+    }
+    for(int col=2+idx;col<38-idx;col++)
+    {
+      fields[2+idx][col].has_wall=true;
+    }
+
+    for(int row=2+idx;row<27-idx;row++)
+     {
+      fields[row][37-idx].has_wall=true;
+     }
+    for(int col=2+idx;col<38-idx;col++)
+    {
+      fields[28-(2+idx)][col].has_wall=true;
+    }
+ }
+
+ for(int col=2;col<38;col++)
+ {
+     fields[15][col].has_wall=false;
+ }
+
+ for(int row=2;row<28;++row)
+ {
+     fields[row][13].has_wall=false;
+     fields[row][25].has_wall=false;
+ }
 
 }
 
@@ -153,7 +246,13 @@ void Board::generate_four()
 //generuje planszę jeśli wybrano tryb pięć
 void Board::generate_five()
 {
-
+   for(int col=2;col<=38;col=col+2)
+   {
+       for(int row=2;row<=28;row=row+2)
+       {
+           fields[row][col].has_wall=true;
+       }
+   }
 }
 
 //generuje szczepionki
