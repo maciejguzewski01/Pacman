@@ -2,7 +2,7 @@
 #include <fstream>
 
 //konstruktor 
-SFMLapp::SFMLapp(Pacman & pacman_sfml, Board & board_sfml, Manager & manager_sfml): pacman_sfml(pacman_sfml), board_sfml(board_sfml), manager_sfml(manager_sfml)
+SFMLapp::SFMLapp(Pacman & pacman_sfml, Board & board_sfml,Bonus & bonus_sfml, Manager & manager_sfml): pacman_sfml(pacman_sfml), board_sfml(board_sfml), bonus_sfml(bonus_sfml), manager_sfml(manager_sfml)
 {
 
  
@@ -69,6 +69,14 @@ void SFMLapp::draw_board(sf::RenderWindow & win)
          {
              vaccine.setPosition(col*20-5,row*20);
               win.draw(vaccine);
+         }
+         else if(board_sfml.is_bonus_on_field(row,col))
+         {
+            sf::RectangleShape r;
+            r.setSize(sf::Vector2f(20,20));
+            r.setPosition(col*20,row*20);
+            r.setFillColor(sf::Color::Green);
+            win.draw(r);
          }
          
          if(board_sfml.is_any_virus_on_field(row,col))

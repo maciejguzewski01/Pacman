@@ -2,7 +2,7 @@
 #include <iostream>
 
 //konstruktor
-Events::Events(Pacman & pacman_e, Board & board_e, Manager & manager_e,SFMLapp & sfml_e): pacman_e(pacman_e), board_e(board_e), manager_e(manager_e), sfml_e(sfml_e)
+Events::Events(Pacman & pacman_e, Board & board_e,Bonus & bonus_e, Manager & manager_e,SFMLapp & sfml_e): pacman_e(pacman_e), board_e(board_e),bonus_e(bonus_e), manager_e(manager_e), sfml_e(sfml_e) 
 {
     
 }

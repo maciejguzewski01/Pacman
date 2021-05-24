@@ -8,15 +8,19 @@
 #include "Board.h"
 #include "Manager.h"
 #include "SFMLapp.h"
+#include "Bonus.h"
+
 
 class Events
 {
    Pacman & pacman_e;
    Board & board_e;
+   Bonus & bonus_e;
    Manager & manager_e;
    SFMLapp & sfml_e;
+   
   public:
-  Events(Pacman & pacman_e, Board & board_e, Manager & manager_e,SFMLapp & sfml_e);
+  explicit Events(Pacman & pacman_e, Board & board_e,Bonus & bonus_e,Manager & manager_e,SFMLapp & sfml_e);
   void key_was_pressed(sf::Event event);
   
 };

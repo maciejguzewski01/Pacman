@@ -9,6 +9,7 @@
 #include <ctime>
 #include "SFMLapp.h"
 #include "Events.h"
+#include "Bonus.h"
 
 
 
@@ -22,12 +23,14 @@ int main()
     Pacman pacman_test("nazwa");
    
     Board board_test(pacman_test,FIRST,FIVE);
+    
+    Bonus bonus_test(pacman_test,board_test);
    
-    Manager manager_test(pacman_test,board_test);
+    Manager manager_test(pacman_test,board_test,bonus_test);
 
-    SFMLapp sfml_test(pacman_test,board_test,manager_test);
+    SFMLapp sfml_test(pacman_test,board_test,bonus_test,manager_test);
 
-    Events events_test(pacman_test,board_test,manager_test,sfml_test);
+    Events events_test(pacman_test,board_test,bonus_test,manager_test,sfml_test);
 
     std::cout<<"HELLO WORLD!"<<std::endl;
 

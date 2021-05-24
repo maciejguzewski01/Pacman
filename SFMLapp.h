@@ -7,6 +7,7 @@
 #include "Coronavirus.h"
 #include "Board.h"
 #include "Manager.h"
+#include "Bonus.h"
 #include <cstring>
 
 
@@ -14,10 +15,11 @@ class SFMLapp
 {
     Pacman & pacman_sfml;
     Board & board_sfml;
+    Bonus & bonus_sfml;
     Manager & manager_sfml;
+    
 
-
-    // sf::CircleShape pacman;
+  
    sf::RectangleShape wall;
   
    void draw_board(sf::RenderWindow & win);
@@ -41,7 +43,7 @@ sf::Texture pacman_east;
 sf::Texture pacman_west;
 sf::Sprite pacman;
     public:
-    SFMLapp(Pacman & pacman_sfml, Board & board_sfml, Manager & manager_sfml);
+    explicit SFMLapp(Pacman & pacman_sfml, Board & board_sfml,Bonus & bonus_sfml, Manager & manager_sfml);
 
     void draw(sf::RenderWindow & win);
 };

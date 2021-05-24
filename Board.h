@@ -11,7 +11,7 @@ struct Field
 {
    bool has_wall;
    bool has_vaccine;
-   //bool has_bonus;
+   bool has_bonus;
 };
 enum Level_name {FIRST,SECOND,THIRD};
 enum Board_order {RANDOM,ONE,TWO,THREE,FOUR,FIVE};
@@ -38,10 +38,12 @@ class Board
     void generate_three();
     void generate_four();
     void generate_five();
-   
+    void generate_bonus();
+    
+    std::vector<sf::Vector2f> bonus_vec;
 
     public:
-    Board(Pacman & pacman_b, Level_name level,Board_order choosed_board);
+    explicit Board(Pacman & pacman_b, Level_name level,Board_order choosed_board);
     int get_total_vaccine_number();
     bool can_pacman_move(Move_direction direction);
     bool can_virus_move(int number,Move_direction direction);
@@ -50,6 +52,7 @@ class Board
     bool is_vaccine_on_field(int row,int col);
     bool is_pacman_on_field(int row,int col);
     bool is_any_virus_on_field(int row,int col);
+    bool is_bonus_on_field(int row,int col);
     sf::Vector2f get_position_of_virus_number(int number);
     int get_number_of_viruses();
     
@@ -60,7 +63,7 @@ class Board
 
     void move_virus(int number, Move_direction direction);
 
-   
+   std::vector<sf::Vector2f> get_bonus_vec();
 };
 
 

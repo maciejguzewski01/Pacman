@@ -5,23 +5,44 @@
 Board::Board(Pacman & pacman_b, Level_name level, Board_order choosed_board): pacman_b(pacman_b),level(level), choosed_board(choosed_board)
 {
     virues_speed=0.2;
+    
    
     for(int row=0;row<=29;++row)
     {
         for(int col=0;col<=39;++col)
         {
             fields[row][col].has_wall=false;
-            fields[row][col].has_vaccine=false;    
+            fields[row][col].has_vaccine=false; 
+            fields[row][col].has_bonus=false;   
         }
     }
     
-    
-    generate_viruses();
     generate_walls();
+    generate_viruses();
+    generate_bonus();
     generate_vaccines();
     
 }
 
+
+//generuje ilość i położenie bonusów
+void Board::generate_bonus()
+{
+    int number_of_bonuses=rand()%5+2;
+    int placed_bonuses=0;
+    while(placed_bonuses!=number_of_bonuses)
+    {
+        int row,col;
+        row=rand()%27+1;
+      col=rand()%38+1;
+      if(fields[row][col].has_wall==true) continue;
+      if((row==1)and(col==1)) continue;
+      if((row==15)and(col>=11)and(col<=30)) continue;
+      fields[row][col].has_bonus=true;
+      bonus_vec.push_back(sf::Vector2f(col,row));
+        placed_bonuses++;
+    }
+}
 
 //generuje wirusy 
 void Board::generate_viruses()
@@ -263,6 +284,7 @@ void Board::generate_vaccines()
       for(int col=1;col<40;col++)
       {
           if(fields[row][col].has_wall==true ) continue;
+          if(fields[row][col].has_bonus==true ) continue;
           if((row==1)and(col==1)) continue;
           if((row==15)and(col>=11)and(col<=30)) continue;
           
@@ -370,9 +392,26 @@ bool Board::is_any_virus_on_field(int row,int col)
  return false;
 }
 
+//sprawdza czy na danym polu jest bonus 
+bool Board::is_bonus_on_field(int row,int col)
+{
+   if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
+    
+    for(size_t i=0;i<bonus_vec.size();i++)
+     {
+    
+     int x=bonus_vec[i].x;
+     int y=bonus_vec[i].y;
+     if((col==x)and(row==y)) return true;
+     }
+     return false;
+}
+
 //zwraca pozycję wirusa o podanym numerze
 sf::Vector2f Board::get_position_of_virus_number(int number)
 {
+    int size=viruses.size();
+    if((number<0)or(number>size-1)) exit(-1);
    return viruses[number].get_position();
 }
 
@@ -411,3 +450,8 @@ double Board::get_viruses_speed()
 }
 
 
+//zwraca wektor bonusów 
+std::vector<sf::Vector2f> Board::get_bonus_vec()
+{
+    return bonus_vec;
+}

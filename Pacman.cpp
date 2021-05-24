@@ -7,7 +7,7 @@ Pacman::Pacman(std::string name) : name(name)
     position=sf::Vector2f(1,1);
     lives=3;
     speed=0.01;
-    move_to=SOUTH;
+    move_to=EAST;
 }
 
 

@@ -5,6 +5,7 @@
 #include "Board.h"
 #include "Pacman.h"
 #include "Coronavirus.h"
+#include "Bonus.h"
 #include <vector>
 
 class Manager
@@ -13,7 +14,7 @@ class Manager
    
    Pacman & pacman_m;
    Board & board_m;
-   
+   Bonus & bonus_m;
 
    sf::Clock clk_pacman;
    sf::Clock clk_viruses;
@@ -34,7 +35,7 @@ class Manager
   
 
   public:
-  Manager(Pacman & pacman_m,Board & board_m);
+  explicit Manager(Pacman & pacman_m,Board & board_m,Bonus & bonus_m);
   
   void play(Move_direction direction);
 
