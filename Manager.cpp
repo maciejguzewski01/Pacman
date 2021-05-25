@@ -107,6 +107,11 @@ void Manager::move_pacman(Move_direction direction)
        score++;
        board_m.vaccinate(row,col);
     }
+    else if(board_m.is_bonus_on_field(row,col)==true)
+    {
+        board_m.delete_bonus(row,col);
+        bonus_m.bonus_activated(row,col);
+    }
 
 
 

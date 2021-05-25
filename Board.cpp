@@ -399,7 +399,7 @@ bool Board::is_bonus_on_field(int row,int col)
     
     for(size_t i=0;i<bonus_vec.size();i++)
      {
-    
+     if(bonus_vec[i]==sf::Vector2f(-1,-1)) continue;
      int x=bonus_vec[i].x;
      int y=bonus_vec[i].y;
      if((col==x)and(row==y)) return true;
@@ -450,8 +450,33 @@ double Board::get_viruses_speed()
 }
 
 
+//zwraca numer bonusu na podanej pozycji
+int Board::get_number_of_bonus(int row,int col)
+{
+    if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
+    
+    for(size_t i=0;i<bonus_vec.size();++i)
+    {
+        if((col==bonus_vec[i].x)and(row==bonus_vec[i].y)) return i;
+    }
+
+    return -1;
+
+}
+
 //zwraca wektor bonusów 
 std::vector<sf::Vector2f> Board::get_bonus_vec()
 {
     return bonus_vec;
 }
+
+
+ void Board::delete_bonus(int row, int col)
+ {
+    if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
+    
+    fields[row][col].has_bonus=false;
+    
+    int nr=get_number_of_bonus( row,col);
+    bonus_vec[nr]=sf::Vector2f(-1,-1);
+ }

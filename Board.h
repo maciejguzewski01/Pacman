@@ -55,7 +55,7 @@ class Board
     bool is_bonus_on_field(int row,int col);
     sf::Vector2f get_position_of_virus_number(int number);
     int get_number_of_viruses();
-    
+    int get_number_of_bonus(int row,int col);
     void vaccinate(int row,int col);
     void reset();
 
@@ -64,6 +64,8 @@ class Board
     void move_virus(int number, Move_direction direction);
 
    std::vector<sf::Vector2f> get_bonus_vec();
+
+   void delete_bonus(int row, int col);
 };
 
 
