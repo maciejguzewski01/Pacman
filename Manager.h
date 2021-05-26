@@ -18,6 +18,7 @@ class Manager
 
    sf::Clock clk_pacman;
    sf::Clock clk_viruses;
+   sf::Clock clk_lockdown;
 
    void move_pacman(Move_direction direction);
    bool did_pacman_meet_virus();

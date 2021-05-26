@@ -431,15 +431,22 @@ int Board::get_number_of_viruses()
    return size;
 }
 
-//resetuje stan planszy (pozycję wirusów i pacmana) 
-void Board::reset()
+
+//resetuje pozycje wirusów
+void Board::reset_viruses()
 {
-      pacman_b.set_position_to(1,1);
-      for(int i=0;i<get_number_of_viruses();i++)
+    for(int i=0;i<get_number_of_viruses();i++)
       {
           
           viruses[i].set_position_to(10+i+1,15);
       }
+}
+
+//resetuje stan planszy (pozycję wirusów i pacmana) 
+void Board::reset()
+{
+      pacman_b.set_position_to(1,1);
+      reset_viruses();
 }
 
 
@@ -487,4 +494,11 @@ std::vector<sf::Vector2f> Board::get_bonus_vec()
  {
      int i=get_number_of_viruses();
      viruses.push_back(Coronavirus(i));
+ }
+
+
+ //ustawia daną prędkość wirusów 
+ void Board::set_viruses_speed(double speed)
+ {
+    virues_speed=speed;
  }

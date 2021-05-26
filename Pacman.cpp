@@ -79,3 +79,10 @@ Move_direction Pacman::get_move_to()
 {
     return move_to;
 }
+
+
+//ustawia ilość żyć na daną ilość 
+void Pacman::set_lives_number(int number)
+{
+    lives=number;
+}

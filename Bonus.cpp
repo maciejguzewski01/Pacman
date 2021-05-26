@@ -25,7 +25,7 @@ Bonus_type Bonus::rand_type_of_bonus()
    //USUNĄĆ!!!!!!!
    if(idx==0)
    {
-       number=1;
+       number=4;
        idx++;
        //idx w klasie
    }
@@ -44,11 +44,11 @@ randomize_vec[randomize_vec.size()-1]=number;
     if(number==1) return SCHOOL;
     if(number==2) return TYPE_TWO;
     if(number==3) return TYPE_THREE;
-    if(number==4) return TYPE_FOUR;
-    if(number==5) return TYPE_FIVE;
-    if(number==6) return TYPE_SIX;
-    if(number==7) return TYPE_SEVEN;
-    if(number==8) return TYPE_EIGHT;
+    if(number==4) return BRITAIN;
+    if(number==5) return RESPIRATOR;
+    if(number==6) return LOCKDOWN;
+    if(number==7) return SUMMER;
+    if(number==8) return LITE_LOCKDOWN;
     if(number==9) return TYPE_NINE;
     if(number==10) return TYPE_TEN;
    
@@ -131,30 +131,39 @@ void Bonus::bonus_three()
 //obsługa bonusu nr 4
 void Bonus::bonus_four()
 {
-    
+    double speed;
+    speed=board_b.get_viruses_speed();
+    speed=speed/2;
+    board_b.set_viruses_speed(speed);
 }
 
 //obsługa bonusu nr 5
 void Bonus::bonus_five()
 {
-    
+    pacman_b.set_lives_number(4);
 }
 
 //obsługa bonusu nr 6
 void Bonus::bonus_six()
 {
-    
+    lockdown=true;
 }
 
 //obsługa bonusu nr 7
 void Bonus::bonus_seven()
 {
-    
+    board_b.reset_viruses();
 }
 
 //obsługa bonusu nr 8
 void Bonus::bonus_eight()
 {
+    
+    double speed;
+    speed=board_b.get_viruses_speed();
+    speed=speed*2;
+    board_b.set_viruses_speed(speed);
+
     
 }
 
@@ -168,4 +177,19 @@ void Bonus::bonus_nine()
 void Bonus::bonus_ten()
 {
     
+}
+
+
+
+
+//zwraca prawdę jeśli jest lockdown
+bool Bonus::is_lockdown()
+{
+    return lockdown;
+}
+
+//kończy lockdown
+bool Bonus::end_lockdown()
+{
+    lockdown=false;
 }

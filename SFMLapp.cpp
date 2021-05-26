@@ -49,6 +49,27 @@ SFMLapp::SFMLapp(Pacman & pacman_sfml, Board & board_sfml,Bonus & bonus_sfml, Ma
    bell_t.loadFromFile("../resources/bonus_icons/bell.png");
    bell.setTexture(bell_t);
    bell.setScale(0.06,0.06);
+   
+   sun_t.loadFromFile("../resources/bonus_icons/sun.png");
+   sun.setTexture(sun_t);
+   sun.setScale(0.1,0.1);
+
+   red_cross_t.loadFromFile("../resources/bonus_icons/red_cross.png");
+   red_cross.setTexture(red_cross_t);
+   red_cross.setScale(0.07,0.07);
+
+   lite_lockdown_t.loadFromFile("../resources/bonus_icons/lite_lockdown.png");
+   lite_lockdown.setTexture(lite_lockdown_t);
+   lite_lockdown.setScale(0.04,0.04);
+
+   lockdown_t.loadFromFile("../resources/bonus_icons/lockdown.png");
+   lockdown.setTexture(lockdown_t);
+   lockdown.setScale(0.04,0.04);
+
+   tea_t.loadFromFile("../resources/bonus_icons/tea.png");
+   tea.setTexture(tea_t);
+   tea.setScale(0.04,0.04);
+
 }
 
 
@@ -180,5 +201,30 @@ void SFMLapp::draw_bonus(int row,int col, sf::RenderWindow & win)
   {
       bell.setPosition(col*20-32,row*20-8);
       win.draw(bell);
+  }
+  else if(bonus==BRITAIN)
+  {
+      tea.setPosition(col*20-18,row*20-2);
+      win.draw(tea);
+  }
+  else if(bonus==RESPIRATOR)
+  {
+      red_cross.setPosition(col*20-33.5,row*20-9);
+      win.draw(red_cross);
+  }
+  else if(bonus==LOCKDOWN)
+  {
+      lockdown.setPosition(col*20-18,row*20-5);
+      win.draw(lockdown);
+  }
+  else if(bonus==SUMMER)
+  {
+      sun.setPosition(col*20-45,row*20-23);
+      win.draw(sun);
+  }
+  else if(bonus==LITE_LOCKDOWN)
+  {
+      lite_lockdown.setPosition(col*20-17,row*20-5);
+      win.draw(lite_lockdown);
   }
 }

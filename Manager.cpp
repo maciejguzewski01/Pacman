@@ -135,6 +135,10 @@ void Manager::do_something(Bonus_type type)
        
        
    }
+   else if(type==LOCKDOWN)
+   {
+       clk_lockdown.restart();
+   }
 }
 
 //sprawdza czy pacman i wirus spotkali się na polu 
@@ -164,6 +168,11 @@ void Manager::pacman_meet_virus()
 //zarządza ruchem wirusów 
 void Manager::move_viruses( )
 { 
+    if(bonus_m.is_lockdown()==true)
+    {
+        if(clk_lockdown.getElapsedTime().asSeconds()>20) bonus_m.end_lockdown();
+        return;
+    } 
    for(int i=0;i<board_m.get_number_of_viruses();++i)
    {   
      if(board_m.can_virus_move(i,viruses_directions[i])==true)

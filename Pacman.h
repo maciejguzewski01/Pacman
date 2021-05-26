@@ -27,7 +27,7 @@ class Pacman
   void remove_live();
   void set_position_to(int row,int col);
   Move_direction get_move_to();
-
+  void set_lives_number(int number);
 };
 
 

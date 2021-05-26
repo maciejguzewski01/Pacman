@@ -8,7 +8,7 @@
 #include <iostream>
 #include <vector>
 
-enum Bonus_type{NONE,SCHOOL,TYPE_TWO,TYPE_THREE,TYPE_FOUR,TYPE_FIVE,TYPE_SIX,TYPE_SEVEN,TYPE_EIGHT,TYPE_NINE,TYPE_TEN };
+enum Bonus_type{NONE,SCHOOL,TYPE_TWO,TYPE_THREE,BRITAIN,RESPIRATOR,LOCKDOWN,SUMMER,LITE_LOCKDOWN,TYPE_NINE,TYPE_TEN };
 
 class Bonus
 {
@@ -31,11 +31,16 @@ class Bonus
 
     int idx=0;
 
+    bool lockdown=false;
+
     public:
     explicit Bonus(Pacman & pacman_b, Board & board_b);
     
     Bonus_type get_type_of_bonus(int row, int col);
     void bonus_activated(int row, int col);
+
+    bool is_lockdown();
+    bool end_lockdown();
 };
 
 
