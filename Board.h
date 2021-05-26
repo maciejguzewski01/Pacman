@@ -66,6 +66,8 @@ class Board
    std::vector<sf::Vector2f> get_bonus_vec();
 
    void delete_bonus(int row, int col);
+
+   void add_virus();
 };
 
 

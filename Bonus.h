@@ -29,6 +29,8 @@ class Bonus
     void bonus_nine();
     void bonus_ten();
 
+    int idx=0;
+
     public:
     explicit Bonus(Pacman & pacman_b, Board & board_b);
     

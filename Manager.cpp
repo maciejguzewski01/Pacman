@@ -109,14 +109,33 @@ void Manager::move_pacman(Move_direction direction)
     }
     else if(board_m.is_bonus_on_field(row,col)==true)
     {
-        board_m.delete_bonus(row,col);
+        Bonus_type type=bonus_m.get_type_of_bonus( row,  col);
         bonus_m.bonus_activated(row,col);
+       board_m.delete_bonus(row,col);
+       do_something(type);
+        
     }
 
 
 
 }
 
+
+//funkcja wywoływana jeśli aktywował się bonus i wymagane jest wykonanie jakiejś aktywnosci 
+void Manager::do_something(Bonus_type type)
+{
+   if(type==SCHOOL)
+   {
+       int size=board_m.get_number_of_viruses();
+       for(int i=5;i<10;++i)
+       {
+         viruses_directions.push_back(NORTH);
+         rand_number_of_moves.push_back(1);
+       }
+       
+       
+   }
+}
 
 //sprawdza czy pacman i wirus spotkali się na polu 
 bool Manager::did_pacman_meet_virus()

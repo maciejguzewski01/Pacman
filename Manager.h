@@ -31,7 +31,7 @@ class Manager
    void move_viruses();
 
    void generate_first_directions();
-   
+   void do_something(Bonus_type type);
   
 
   public:

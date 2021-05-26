@@ -5,6 +5,7 @@
 Coronavirus::Coronavirus(int nr): number(nr)
 {
     position=sf::Vector2f(10+number+1,15);//nr wiersza- nr kolumny
+    
 }
 
 

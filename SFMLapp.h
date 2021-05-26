@@ -42,6 +42,12 @@ sf::Texture pacman_south;
 sf::Texture pacman_east;
 sf::Texture pacman_west;
 sf::Sprite pacman;
+
+
+void draw_bonus(int row,int col, sf::RenderWindow & win);
+   sf::Texture bell_t;
+   sf::Sprite bell;
+
     public:
     explicit SFMLapp(Pacman & pacman_sfml, Board & board_sfml,Bonus & bonus_sfml, Manager & manager_sfml);
 

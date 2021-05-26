@@ -45,6 +45,10 @@ SFMLapp::SFMLapp(Pacman & pacman_sfml, Board & board_sfml,Bonus & bonus_sfml, Ma
    pacman_west.loadFromFile("../resources/pacman_west.png");
    pacman.setTexture(pacman_static);
    pacman.setScale(0.08,0.08);
+
+   bell_t.loadFromFile("../resources/bonus_icons/bell.png");
+   bell.setTexture(bell_t);
+   bell.setScale(0.06,0.06);
 }
 
 
@@ -77,6 +81,10 @@ void SFMLapp::draw_board(sf::RenderWindow & win)
             r.setPosition(col*20,row*20);
             r.setFillColor(sf::Color::Green);
             win.draw(r);
+            
+            draw_bonus(row,col,win);
+            
+            
          }
          
          if(board_sfml.is_any_virus_on_field(row,col))
@@ -88,7 +96,7 @@ void SFMLapp::draw_board(sf::RenderWindow & win)
          }
          if(board_sfml.is_pacman_on_field(row,col))
          {
-             if(clk.getElapsedTime().asSeconds()>0.1) 
+             if(clk.getElapsedTime().asSeconds()>0.2) 
              {
               pacman_icon_movment();
                clk.restart();
@@ -159,4 +167,18 @@ void SFMLapp::draw(sf::RenderWindow & win)
      win.draw(r);
  }
      
+}
+
+
+
+//rysowanie bonusu
+void SFMLapp::draw_bonus(int row,int col, sf::RenderWindow & win)
+{
+  Bonus_type bonus=bonus_sfml.get_type_of_bonus(row, col);
+ if(bonus==NONE) return;
+  if(bonus==SCHOOL) 
+  {
+      bell.setPosition(col*20-32,row*20-8);
+      win.draw(bell);
+  }
 }

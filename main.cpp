@@ -36,7 +36,7 @@ int main()
 
 sf::RenderWindow window(sf::VideoMode(800, 600), "TEST");
 window.setVerticalSyncEnabled(false);
-window.setFramerateLimit(70);
+window.setFramerateLimit(100);
 
      while (window.isOpen())
     {

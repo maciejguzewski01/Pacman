@@ -20,7 +20,16 @@ Bonus_type Bonus::rand_type_of_bonus()
     //POZMIENIAĆ!!!!!!!!!!!!!!!!!!!
     int number=rand()%10+1;
     bool already_was=false;
-   
+   //kawałek kodu wymuszający wygenerowanie danego bonusu 
+   //TYLKO DLA TESTÓW 
+   //USUNĄĆ!!!!!!!
+   if(idx==0)
+   {
+       number=1;
+       idx++;
+       //idx w klasie
+   }
+
    do{
        already_was=false;
         for(size_t i=0;i<randomize_vec.size();++i)
@@ -50,7 +59,6 @@ randomize_vec[randomize_vec.size()-1]=number;
 Bonus_type Bonus::get_type_of_bonus(int row, int col)
 {
     if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
-
     int nr=board_b.get_number_of_bonus(row,col);
     int size=bonuses_types.size();
     if((nr<0)or(nr>size)) return NONE;
@@ -66,12 +74,13 @@ void Bonus::bonus_activated(int row, int col)
    int nr=board_b.get_number_of_bonus(row,col);
    int size=bonuses_types.size();
    if((nr<0)or(nr>size)) exit(-1);
+   Bonus_type type=bonuses_types[nr];
 
-   switch(nr)
+   switch(type)
    {
        case 0: return;
        break;
-       case 1: bonus_one();
+       case SCHOOL: bonus_one();
        break;
        case 2: bonus_two();
        break;
@@ -92,7 +101,6 @@ void Bonus::bonus_activated(int row, int col)
        case 10: bonus_ten();
        break;
    }
-
 }
 
 
@@ -100,7 +108,12 @@ void Bonus::bonus_activated(int row, int col)
 //obsługa bonusu nr 1
 void Bonus::bonus_one()
 {
+  int number=board_b.get_number_of_viruses();
 
+  for(int i=0;i<number;++i)
+  {
+      board_b.add_virus();
+  }
 }
 
 //obsługa bonusu nr 2

@@ -478,5 +478,13 @@ std::vector<sf::Vector2f> Board::get_bonus_vec()
     fields[row][col].has_bonus=false;
     
     int nr=get_number_of_bonus( row,col);
-    bonus_vec[nr]=sf::Vector2f(-1,-1);
+   bonus_vec[nr]=sf::Vector2f(-1,-1);
+ }
+
+
+ //dodaje wirusa
+ void Board::add_virus()
+ {
+     int i=get_number_of_viruses();
+     viruses.push_back(Coronavirus(i));
  }
