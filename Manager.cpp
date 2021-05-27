@@ -64,6 +64,10 @@ void Manager::play(Move_direction direction)
        clk_viruses.restart();
       }
       
+      if(uniform==true) 
+      {
+          if(clk_uniform.getElapsedTime().asSeconds()>20) uniform=false;
+      }
       
     }
     
@@ -78,7 +82,7 @@ void Manager::move_pacman(Move_direction direction)
   
    if(did_pacman_meet_virus()==true)
    {
-     pacman_meet_virus();
+     if(uniform==false) pacman_meet_virus();
      return;
    } 
        
@@ -94,7 +98,7 @@ void Manager::move_pacman(Move_direction direction)
   
    if(did_pacman_meet_virus()==true)
    {
-       pacman_meet_virus();
+       if(uniform==false) pacman_meet_virus();
         return;
    }  
 
@@ -104,7 +108,9 @@ void Manager::move_pacman(Move_direction direction)
      
   if(board_m.is_vaccine_on_field(row,col)==true)
     {
+       if(antivaxx==true) score++;
        score++;
+       vaccines++;
        board_m.vaccinate(row,col);
     }
     else if(board_m.is_bonus_on_field(row,col)==true)
@@ -131,13 +137,30 @@ void Manager::do_something(Bonus_type type)
        {
          viruses_directions.push_back(NORTH);
          rand_number_of_moves.push_back(1);
-       }
-       
-       
+       }       
+   }
+   else if(type==PLANE)
+   {
+       clk_uniform.restart();
+       uniform=true;
    }
    else if(type==LOCKDOWN)
    {
        clk_lockdown.restart();
+   }
+   else if(type==DEATH)
+   {
+       int size=board_m.get_number_of_viruses();
+       int last_size=viruses_directions.size();
+       for(int i=last_size;i>size;--i)
+       {
+         viruses_directions.pop_back();
+         rand_number_of_moves.pop_back();
+       }
+   }
+   else if(type==ANTIVAXXERS)
+   {
+       antivaxx=true;
    }
 }
 
@@ -190,7 +213,10 @@ void Manager::move_viruses( )
      }
     
    }
-   if(did_pacman_meet_virus()==true) pacman_meet_virus();
+   if(did_pacman_meet_virus()==true) 
+   {
+       if(uniform==false) pacman_meet_virus();
+   }
 }
 /* OPIS ALGORYTMU PORUSZANIA SIĘ wirusów
 Tworzymy dwa wektory pomocnicze int o długości takiej samej jak długość wektora wirusów
@@ -230,3 +256,12 @@ int Manager::get_score() const
     return score;
 }
   
+int Manager::get_done_vaccine_number() const
+{
+    return vaccines;
+}
+
+bool Manager::get_uniform_state() const
+{
+    return uniform;
+}

@@ -8,7 +8,7 @@
 #include <iostream>
 #include <vector>
 
-enum Bonus_type{NONE,SCHOOL,TYPE_TWO,TYPE_THREE,BRITAIN,RESPIRATOR,LOCKDOWN,SUMMER,LITE_LOCKDOWN,TYPE_NINE,TYPE_TEN };
+enum Bonus_type{NONE,SCHOOL,PLANE,BORDER,BRITAIN,RESPIRATOR,LOCKDOWN,SUMMER,LITE_LOCKDOWN,DEATH,ANTIVAXXERS };
 
 class Bonus
 {
@@ -28,8 +28,6 @@ class Bonus
     void bonus_eight();
     void bonus_nine();
     void bonus_ten();
-
-    int idx=0;
 
     bool lockdown=false;
 

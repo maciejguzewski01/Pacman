@@ -68,9 +68,11 @@ class Board
    void delete_bonus(int row, int col);
 
    void add_virus();
+   void delete_virus();
    void reset_viruses();
 
    void set_viruses_speed(double speed);
+   void add_vaccine(int row,int col);
 };
 
 

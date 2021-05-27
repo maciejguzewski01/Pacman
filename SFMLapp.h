@@ -57,6 +57,16 @@ void draw_bonus(int row,int col, sf::RenderWindow & win);
    sf::Sprite lockdown;
    sf::Texture tea_t;
    sf::Sprite tea;
+   sf::Texture antivaxx_t;
+   sf::Sprite antivaxx;
+   sf::Texture grave_t;
+   sf::Sprite grave;
+   sf::Texture barrier_t;
+   sf::Sprite barrier;
+   sf::Texture plane_t;
+   sf::Sprite plane;
+   sf::Texture pacman_uniform_t;
+   sf::Sprite pacman_uniform;
 
     public:
     explicit SFMLapp(Pacman & pacman_sfml, Board & board_sfml,Bonus & bonus_sfml, Manager & manager_sfml);

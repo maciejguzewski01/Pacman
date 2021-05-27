@@ -17,18 +17,10 @@ Bonus::Bonus(Pacman & pacman_b, Board & board_b): pacman_b(pacman_b), board_b(bo
 //losuje rodzaj bonusu
 Bonus_type Bonus::rand_type_of_bonus()
 {
-    //POZMIENIAĆ!!!!!!!!!!!!!!!!!!!
+    
     int number=rand()%10+1;
     bool already_was=false;
-   //kawałek kodu wymuszający wygenerowanie danego bonusu 
-   //TYLKO DLA TESTÓW 
-   //USUNĄĆ!!!!!!!
-   if(idx==0)
-   {
-       number=4;
-       idx++;
-       //idx w klasie
-   }
+   
 
    do{
        already_was=false;
@@ -42,15 +34,15 @@ Bonus_type Bonus::rand_type_of_bonus()
 randomize_vec[randomize_vec.size()-1]=number;
  
     if(number==1) return SCHOOL;
-    if(number==2) return TYPE_TWO;
-    if(number==3) return TYPE_THREE;
+    if(number==2) return PLANE;
+    if(number==3) return BORDER;
     if(number==4) return BRITAIN;
     if(number==5) return RESPIRATOR;
     if(number==6) return LOCKDOWN;
     if(number==7) return SUMMER;
     if(number==8) return LITE_LOCKDOWN;
-    if(number==9) return TYPE_NINE;
-    if(number==10) return TYPE_TEN;
+    if(number==9) return DEATH;
+    if(number==10) return ANTIVAXXERS;
    
    exit(-1);
 }
@@ -125,7 +117,21 @@ void Bonus::bonus_two()
 //obsługa bonusu nr 3
 void Bonus::bonus_three()
 {
-    
+    for(int row=1;row<30;row++)
+  {
+      for(int col=1;col<40;col++)
+      {
+          if(board_b.is_wall_on_field( row, col)==true ) continue;
+          if(board_b.is_bonus_on_field(row, col)==true ) continue;
+          if(board_b.is_pacman_on_field(row, col)==true) continue;
+          if(board_b.is_vaccine_on_field(row, col)==true) continue;
+          if((row==15)and(col>=11)and(col<=30)) continue;
+          
+          board_b.add_vaccine(row,col);
+          
+      }
+      
+  }
 }
 
 //obsługa bonusu nr 4
@@ -170,13 +176,18 @@ void Bonus::bonus_eight()
 //obsługa bonusu nr 9
 void Bonus::bonus_nine()
 {
-    
+    int number=board_b.get_number_of_viruses();
+
+  for(int i=0;i<number/2;++i)
+  {
+      board_b.delete_virus();
+  }
 }
 
 //obsługa bonusu nr 10
 void Bonus::bonus_ten()
 {
-    
+    //
 }
 
 

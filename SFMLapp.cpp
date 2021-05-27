@@ -69,6 +69,27 @@ SFMLapp::SFMLapp(Pacman & pacman_sfml, Board & board_sfml,Bonus & bonus_sfml, Ma
    tea_t.loadFromFile("../resources/bonus_icons/tea.png");
    tea.setTexture(tea_t);
    tea.setScale(0.04,0.04);
+   
+   antivaxx_t.loadFromFile("../resources/bonus_icons/antivaxx.png");
+   antivaxx.setTexture(antivaxx_t);
+   antivaxx.setScale(0.05,0.05);
+
+   grave_t.loadFromFile("../resources/bonus_icons/grave.png");
+   grave.setTexture(grave_t);
+   grave.setScale(0.07,0.07);
+
+   barrier_t.loadFromFile("../resources/bonus_icons/barrier.png");
+   barrier.setTexture(barrier_t);
+   barrier.setScale(0.07,0.07);
+
+   plane_t.loadFromFile("../resources/bonus_icons/plane.png");
+   plane.setTexture(plane_t);
+   plane.setScale(0.04,0.04);
+
+   
+   pacman_uniform_t.loadFromFile("../resources/bonus_icons/pacman_uniform.png");
+   pacman_uniform.setTexture(pacman_uniform_t);
+   pacman_uniform.setScale(0.08,0.08);
 
 }
 
@@ -97,13 +118,7 @@ void SFMLapp::draw_board(sf::RenderWindow & win)
          }
          else if(board_sfml.is_bonus_on_field(row,col))
          {
-            sf::RectangleShape r;
-            r.setSize(sf::Vector2f(20,20));
-            r.setPosition(col*20,row*20);
-            r.setFillColor(sf::Color::Green);
-            win.draw(r);
-            
-            draw_bonus(row,col,win);
+           draw_bonus(row,col,win);
             
             
          }
@@ -117,14 +132,23 @@ void SFMLapp::draw_board(sf::RenderWindow & win)
          }
          if(board_sfml.is_pacman_on_field(row,col))
          {
+             
              if(clk.getElapsedTime().asSeconds()>0.2) 
              {
               pacman_icon_movment();
                clk.restart();
              }
-             pacman.setPosition(col*20-45,row*20-12);
-             win.draw(pacman);
-            
+             
+            if(manager_sfml.get_uniform_state()==true)
+             {
+                 pacman_uniform.setPosition(col*20,row*20);
+                 win.draw(pacman_uniform);
+             }
+             else 
+             {
+                pacman.setPosition(col*20-45,row*20-12);
+                win.draw(pacman);
+             }
          }
       }
       
@@ -137,7 +161,7 @@ void SFMLapp::draw_board(sf::RenderWindow & win)
       win.draw(heart);
   }
   int procent;
-  procent=100*(manager_sfml.get_score())/(board_sfml.get_total_vaccine_number());
+  procent=100*(manager_sfml.get_done_vaccine_number())/(board_sfml.get_total_vaccine_number());
   txt.setCharacterSize(25);
   txt.setFillColor(sf::Color::White);
   txt.setString("Zaszczepiono");
@@ -185,7 +209,7 @@ void SFMLapp::draw(sf::RenderWindow & win)
      r.setSize(sf::Vector2f(100,100));
      r.setPosition(0,0);
      r.setFillColor(sf::Color::Red);
-     win.draw(r);
+      win.draw(r);
  }
      
 }
@@ -201,6 +225,17 @@ void SFMLapp::draw_bonus(int row,int col, sf::RenderWindow & win)
   {
       bell.setPosition(col*20-32,row*20-8);
       win.draw(bell);
+  }
+  else if(bonus==PLANE)
+  {
+      plane.setPosition(col*20,row*20);
+      win.draw(plane);
+  }
+  else if(bonus==BORDER)
+  {
+      
+      barrier.setPosition(col*20,row*20);
+      win.draw(barrier);
   }
   else if(bonus==BRITAIN)
   {
@@ -226,5 +261,15 @@ void SFMLapp::draw_bonus(int row,int col, sf::RenderWindow & win)
   {
       lite_lockdown.setPosition(col*20-17,row*20-5);
       win.draw(lite_lockdown);
+  }
+  else if(bonus==DEATH)
+  {
+      grave.setPosition(col*20+3,row*20+2);
+      win.draw(grave);
+  }
+  else if(bonus==ANTIVAXXERS)
+  {
+      antivaxx.setPosition(col*20,row*20);
+      win.draw(antivaxx);
   }
 }

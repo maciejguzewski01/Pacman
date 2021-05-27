@@ -496,9 +496,21 @@ std::vector<sf::Vector2f> Board::get_bonus_vec()
      viruses.push_back(Coronavirus(i));
  }
 
+ //usuwa wirusa 
+ void Board::delete_virus()
+ {
+     viruses.pop_back();
+ }
 
  //ustawia daną prędkość wirusów 
  void Board::set_viruses_speed(double speed)
  {
     virues_speed=speed;
+ }
+
+ //dodaje szczepionkę na dane pole 
+ void Board::add_vaccine(int row,int col)
+ {
+   fields[row][col].has_vaccine=true;
+   total_number_of_vaccine++;
  }
