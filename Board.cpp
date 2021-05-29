@@ -514,3 +514,10 @@ std::vector<sf::Vector2f> Board::get_bonus_vec()
    fields[row][col].has_vaccine=true;
    total_number_of_vaccine++;
  }
+
+
+ //zwraca poziom
+ Level_name Board::get_level() const
+ {
+     return level;
+ }

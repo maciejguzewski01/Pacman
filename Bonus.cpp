@@ -200,7 +200,7 @@ bool Bonus::is_lockdown()
 }
 
 //kończy lockdown
-bool Bonus::end_lockdown()
+void Bonus::end_lockdown()
 {
     lockdown=false;
 }

@@ -10,6 +10,7 @@
 #include "Bonus.h"
 #include <cstring>
 
+enum SFML_state {GAME,BONUS,DIED};
 
 class SFMLapp
 {
@@ -17,15 +18,17 @@ class SFMLapp
     Board & board_sfml;
     Bonus & bonus_sfml;
     Manager & manager_sfml;
-    
-
+    SFML_state state;
   
    sf::RectangleShape wall;
+   sf::RectangleShape back;
   
    void draw_board(sf::RenderWindow & win);
 
    sf::Text txt;
    sf::Font font1;
+   sf::Text txt2;
+   sf::Font font2;
    
    sf::Texture virus_t;
    sf::Sprite virus;
@@ -42,6 +45,9 @@ sf::Texture pacman_south;
 sf::Texture pacman_east;
 sf::Texture pacman_west;
 sf::Sprite pacman;
+
+void draw_game_over(sf::RenderWindow & win);
+ sf::RectangleShape rect;
 
 
 void draw_bonus(int row,int col, sf::RenderWindow & win);
@@ -67,6 +73,13 @@ void draw_bonus(int row,int col, sf::RenderWindow & win);
    sf::Sprite plane;
    sf::Texture pacman_uniform_t;
    sf::Sprite pacman_uniform;
+
+   void draw_bonus_info(sf::RenderWindow & win);
+
+
+   void draw_bonus_one_info(sf::RenderWindow & win);
+   void draw_bonus_two_info(sf::RenderWindow & win);
+   void draw_bonus_three_info(sf::RenderWindow & win);
 
     public:
     explicit SFMLapp(Pacman & pacman_sfml, Board & board_sfml,Bonus & bonus_sfml, Manager & manager_sfml);

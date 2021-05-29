@@ -6,7 +6,12 @@
 #include "Pacman.h"
 #include "Coronavirus.h"
 #include "Bonus.h"
+#include <cstring>
+#include <errno.h>
 #include <vector>
+#include <string>
+#include <cstdlib>
+#include <fstream>
 
 class Manager
 {
@@ -39,6 +44,16 @@ class Manager
    void do_something(Bonus_type type);
    bool antivaxx=false;
 
+   void pacman_died();
+   std::vector <std::string> results;
+   void vec_not_full();
+   void vec_full();
+   int idx=0;
+   
+   bool is_bonus=false;
+   Bonus_type type_of_bonus=NONE;
+
+
   public:
   explicit Manager(Pacman & pacman_m,Board & board_m,Bonus & bonus_m);
   
@@ -48,6 +63,10 @@ class Manager
 bool is_pacman_alive();
 int get_done_vaccine_number() const;
 bool get_uniform_state() const;
+bool get_is_bonus_state() const;
+void end_bonus();
+
+Bonus_type get_active_bonus_type();
 };
 
 #endif

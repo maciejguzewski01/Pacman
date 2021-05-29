@@ -115,10 +115,12 @@ void Manager::move_pacman(Move_direction direction)
     }
     else if(board_m.is_bonus_on_field(row,col)==true)
     {
-        Bonus_type type=bonus_m.get_type_of_bonus( row,  col);
+        is_bonus=true;
+        type_of_bonus=bonus_m.get_type_of_bonus( row,  col);
+
         bonus_m.bonus_activated(row,col);
        board_m.delete_bonus(row,col);
-       do_something(type);
+       do_something(type_of_bonus);
         
     }
 
@@ -184,9 +186,78 @@ void Manager::pacman_meet_virus()
     {
       board_m.reset();
     }
-
+    else 
+    {
+        pacman_died();
+    }
+    
 }
 
+
+//wywoływana po (ostatecznej) śmierci pacmana
+void Manager::pacman_died()
+{
+    std::ifstream plik("../wyniki.txt");
+
+  if(!plik)
+  {
+    std::cerr<<"Błąd: "<<strerror(errno)<<std::endl;
+    exit(-1);
+  }
+  
+   while(plik)
+    {
+      results.push_back("");      
+      getline(plik, results[idx]);
+    idx++;
+    }
+   if(results.size()<=10) vec_not_full();
+   else vec_full();
+  
+  plik.close();
+}
+
+//wczytuje wyniki jeśli w pliku nie ma 10 wyników 
+void Manager::vec_not_full()
+{
+   std::ofstream plik("../wyniki.txt");
+
+  if(!plik)
+  {
+    std::cerr<<"Błąd: "<<strerror(errno)<<std::endl;
+    exit(-1);
+  }
+  
+  plik<<pacman_m.get_name()<<" "<<get_score()<<" punktów "<<100*(get_done_vaccine_number())/(board_m.get_total_vaccine_number())<<"% populacji"<<std::endl;
+
+  for(size_t i=0;i<results.size()-1;++i)
+  {
+    plik<<results[i]<<std::endl;
+  }
+
+  plik.close();
+}
+
+//wczytuje wyniki jeśli w pliku jest 10 wyników 
+void Manager::vec_full()
+{
+  std::ofstream plik("../wyniki.txt");
+
+  if(!plik)
+  {
+    std::cerr<<"Błąd: "<<strerror(errno)<<std::endl;
+    exit(-1);
+  }
+  
+  plik<<pacman_m.get_name()<<" "<<get_score()<<" punktów "<<100*(get_done_vaccine_number())/(board_m.get_total_vaccine_number())<<"% populacji"<<std::endl;
+
+  for(size_t i=0;i<9;++i)
+  {
+    plik<<results[i]<<std::endl;
+  }
+
+  plik.close();
+}
 
 //zarządza ruchem wirusów 
 void Manager::move_viruses( )
@@ -264,4 +335,19 @@ int Manager::get_done_vaccine_number() const
 bool Manager::get_uniform_state() const
 {
     return uniform;
+}
+
+bool Manager::get_is_bonus_state() const
+{
+    return is_bonus;
+}
+
+void Manager::end_bonus()
+{
+    is_bonus=false;
+}
+
+Bonus_type Manager::get_active_bonus_type()
+{
+    return type_of_bonus;
 }

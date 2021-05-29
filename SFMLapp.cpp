@@ -1,15 +1,14 @@
 #include "SFMLapp.h"
 #include <fstream>
+#include <string>
 
 //konstruktor 
 SFMLapp::SFMLapp(Pacman & pacman_sfml, Board & board_sfml,Bonus & bonus_sfml, Manager & manager_sfml): pacman_sfml(pacman_sfml), board_sfml(board_sfml), bonus_sfml(bonus_sfml), manager_sfml(manager_sfml)
 {
 
- 
+   state=GAME;
   
    wall.setSize(sf::Vector2f(20,20));
-
-  
    wall.setFillColor(sf::Color(128,128,128));
 
    std::vector < std::string > fontSearchPath {
@@ -26,6 +25,20 @@ SFMLapp::SFMLapp(Pacman & pacman_sfml, Board & board_sfml,Bonus & bonus_sfml, Ma
    }
    txt.setFont(font1);
 
+   std::vector < std::string > fontSearchPath2 {
+    
+        "../resources/LibreBaskerville-Regular.ttf",
+    };
+   bool fontLoaded2=false;
+   for(auto file: fontSearchPath2)
+   {
+     fontLoaded2=font2.loadFromFile(file);
+     if(fontLoaded2) break;
+     std::cerr<<"CZCIONKA SIĘ NIE ŁADUJE!!!!"<<std::endl;
+     exit(-1);
+   }
+   txt2.setFont(font2);
+txt2.setFillColor(sf::Color::Black);
    virus_t.loadFromFile("../resources/wirus.png");
    virus.setTexture(virus_t);
    virus.setScale(0.05,0.05);
@@ -200,23 +213,66 @@ void SFMLapp::pacman_icon_movment()
 //funkcja rysująca
 void SFMLapp::draw(sf::RenderWindow & win)
 {
-    draw_board(win);
+    state=BONUS; //DO TESTÓW!!!!!!!!!!!!
+    if(manager_sfml.get_is_bonus_state()==true) state=BONUS; 
 
- manager_sfml.play(ANY);
- if(manager_sfml.is_pacman_alive()==false)
- {
-     sf::RectangleShape r;
-     r.setSize(sf::Vector2f(100,100));
-     r.setPosition(0,0);
-     r.setFillColor(sf::Color::Red);
-      win.draw(r);
- }
-     
+    if(state==BONUS) draw_bonus_info(win);
+    else if(state==GAME)
+    {
+        draw_board(win);
+        manager_sfml.play(ANY);
+    }
+    else if(state==DIED) draw_game_over(win);
+    else exit(-1);      
+
+    if(manager_sfml.is_pacman_alive()==false) state=DIED;
 }
 
+//rysowanie widoku po śmierci 
+void SFMLapp::draw_game_over(sf::RenderWindow & win)
+{
+   rect.setPosition(100,100);
+   rect.setOutlineThickness(1);
+   rect.setOutlineColor(sf::Color::Black);
+   rect.setSize(sf::Vector2f(600,400));
+   rect.setFillColor(sf::Color(239,223,0));
+   win.draw(rect);
+   txt.setFillColor(sf::Color::Black);
+   txt.setString("GAME OVER!");
+   txt.setPosition(130,110);
+   txt.setCharacterSize(100);
+   win.draw(txt);
 
+   txt.setString(L"Podsumowanie;");
+   txt.setPosition(250,240);
+   txt.setCharacterSize(50);
+   win.draw(txt);
+   txt.setString("Zdobyto "+std::to_string(manager_sfml.get_score()));
+   txt.setPosition(110,300);
+   txt.setCharacterSize(40);
+   win.draw(txt);
+   txt.setString(L" punktów");
+   txt.setPosition(480,300);
+   txt.setCharacterSize(40);
+   win.draw(txt);
+   txt.setString("Zaszczepiono "+std::to_string(100*(manager_sfml.get_done_vaccine_number())/(board_sfml.get_total_vaccine_number())));
+   txt.setPosition(110,350);
+   txt.setCharacterSize(40);
+   win.draw(txt);
+   txt.setString(L" % populacji");
+   txt.setPosition(480,350);
+   txt.setCharacterSize(40);
+   win.draw(txt);
+   rect.setSize(sf::Vector2f(170,40));
+   rect.setPosition(295,420);
+   win.draw(rect);
+   txt.setString(L"KONTYNUUJ");
+   txt.setPosition(300,420);
+   txt.setCharacterSize(30);
+   win.draw(txt);
+}
 
-//rysowanie bonusu
+//rysowanie ikonki bonusu
 void SFMLapp::draw_bonus(int row,int col, sf::RenderWindow & win)
 {
   Bonus_type bonus=bonus_sfml.get_type_of_bonus(row, col);
@@ -272,4 +328,126 @@ void SFMLapp::draw_bonus(int row,int col, sf::RenderWindow & win)
       antivaxx.setPosition(col*20,row*20);
       win.draw(antivaxx);
   }
+}
+
+
+
+//funkcja przekierowująca do rysowania widoku odpowiedniego bonusu 
+void SFMLapp::draw_bonus_info(sf::RenderWindow & win)
+{
+  back.setPosition(0,0);
+  back.setSize(sf::Vector2f(800,600));
+  back.setFillColor(sf::Color(209,162,6));
+  win.draw(back);
+  back.setSize(sf::Vector2f(200,50));
+  back.setPosition(300,530);
+  back.setFillColor(sf::Color::Green);
+  back.setOutlineColor(sf::Color::Black);
+  back.setOutlineThickness(1);
+  win.draw(back);
+  txt.setFillColor(sf::Color::Black);
+  txt.setString("Kontynuuj");
+  txt.setCharacterSize(30);
+  txt.setPosition(335,535);
+  win.draw(txt);
+  Bonus_type type=manager_sfml.get_active_bonus_type();
+  type=SCHOOL; //DO TESTÓW!!!!!!!!!!
+  if(type==SCHOOL) draw_bonus_one_info(win);
+  else if(type==PLANE) draw_bonus_two_info(win);
+  else if(type==BORDER) draw_bonus_three_info(win);
+}
+
+
+//rysuje widok bonusu pierwszego 
+void SFMLapp::draw_bonus_one_info(sf::RenderWindow & win)
+{
+    sf::Sprite help=bell;
+    help.setScale(0.5,0.5);
+    help.setPosition(30,-30);
+    win.draw(help);
+
+    txt2.setString(L"Otwarcie szkół!"); 
+    txt2.setPosition(290,240);
+     txt2.setCharacterSize(30);
+    win.draw(txt2);
+ 
+    txt2.setString(L"Wiadomość z Ministerstwa Edukacji i Nauki!");
+   txt2.setCharacterSize(20);
+    txt2.setPosition(190,280);
+    win.draw(txt2);
+    
+    txt2.setString(L"Z dniem dzisiejszym we wszystkich placówkach oświatowych przywrócona"); 
+    txt2.setPosition(20,330);
+    win.draw(txt2);
+    txt2.setString(L"zostaje stacjonarna forma nauczania.");
+    txt2.setPosition(200,360);
+    win.draw(txt2);
+    txt2.setString(L"*Ilość wirusów wzrasta dwukrotnie*");
+    txt2.setPosition(220,480);
+    win.draw(txt2);
+}
+
+
+//rysuje widok bonusu drugiego
+void SFMLapp::draw_bonus_two_info(sf::RenderWindow & win)
+{
+    sf::Sprite help=plane;
+    help.setScale(0.5,0.5);
+    help.setPosition(230,10);
+    win.draw(help);
+    txt2.setString(L"Przesyłka z Chin!");
+    txt2.setCharacterSize(30);
+    txt2.setPosition(260,230);
+    win.draw(txt2);
+    txt2.setCharacterSize(20);
+    txt2.setString(L"Wiadomość z Agencji Rezerw Materiałowych!");
+    txt2.setPosition(160,270);
+    win.draw(txt2);
+    txt2.setString(L"Na lotnisku wylądował właśnie największy samolot na świecie."); 
+    txt2.setPosition(100,300);
+    win.draw(txt2);
+     txt2.setString(L"Przywiózł środki do walki z pandemią."); 
+    txt2.setPosition(210,330);
+    win.draw(txt2);
+    txt2.setString(L"Otrzymujesz nowy kombinezon ochronny"); 
+    txt2.setPosition(200,360);
+    win.draw(txt2);
+    txt2.setString(L"Niestety przy zakupach sortowaliśmy od najniższej ceny "); 
+    txt2.setPosition(130,390);
+    win.draw(txt2);
+    txt2.setString(L"Więc będzie działał tylko przez 20 sekund"); 
+    txt2.setPosition(200,420);
+    win.draw(txt2);
+    txt2.setString(L"*Przez 20 sekund jesteś odporny na wirusy*"); 
+    txt2.setPosition(190,480);
+    win.draw(txt2);
+}
+
+//rysuje widok bonusu trzeciego
+void SFMLapp::draw_bonus_three_info(sf::RenderWindow & win)
+{
+    sf::Sprite help=barrier;
+    help.setScale(0.5,0.5);
+    help.setPosition(320,20);
+    win.draw(help);
+    txt2.setString(L"Otwarcie granic!");
+    txt2.setCharacterSize(30);
+    txt2.setPosition(250,200);
+    win.draw(txt2);
+     txt2.setString(L"Wiadomość z Urzędu Do Spraw Cudzoziemców!");
+    txt2.setCharacterSize(20);
+    txt2.setPosition(180,240);
+    win.draw(txt2);
+    txt2.setString(L"Przez otwarte granice odnotowaliśmy znaczny napływ niezaszczepionych ");
+    txt2.setPosition(10,280);
+    win.draw(txt2);
+    txt2.setString(L"pracowników ze wschodu");
+    txt2.setPosition(280,310);
+    win.draw(txt2);
+    txt2.setString(L"Musisz ich wyszczepić!");
+    txt2.setPosition(290,350);
+    win.draw(txt2);
+    txt2.setString(L"*Musisz ponownie zebrać szczepionki ze wszystkich pól*");
+    txt2.setPosition(110,480);
+    win.draw(txt2);
 }

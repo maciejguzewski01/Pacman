@@ -38,7 +38,7 @@ class Bonus
     void bonus_activated(int row, int col);
 
     bool is_lockdown();
-    bool end_lockdown();
+    void end_lockdown();
 };
 
 

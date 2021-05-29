@@ -73,6 +73,7 @@ class Board
 
    void set_viruses_speed(double speed);
    void add_vaccine(int row,int col);
+   Level_name get_level() const;
 };
 
 
