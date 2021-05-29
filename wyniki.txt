@@ -1,3 +1,5 @@
+nazwa 106 punktów 12% populacji
+nazwa 0 punktów 0% populacji
 nazwa 0 punktów 0% populacji
 nazwa 34 punktów 4% populacji
 nazwa 47 punktów 6% populacji
@@ -5,6 +7,4 @@ nazwa 88 punktów 11% populacji
 nazwa 66 punktów 8% populacji
 nazwa 40 punktów 5% populacji
 nazwa 29 punktów 3% populacji
-nazwa 58 punktów 7% populacji
-nazwa 81 punktów 10% populacji
 nazwa 58 punktów 7% populacji

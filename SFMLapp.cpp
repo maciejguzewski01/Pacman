@@ -213,7 +213,7 @@ void SFMLapp::pacman_icon_movment()
 //funkcja rysująca
 void SFMLapp::draw(sf::RenderWindow & win)
 {
-    state=BONUS; //DO TESTÓW!!!!!!!!!!!!
+    
     if(manager_sfml.get_is_bonus_state()==true) state=BONUS; 
 
     if(state==BONUS) draw_bonus_info(win);
@@ -351,10 +351,18 @@ void SFMLapp::draw_bonus_info(sf::RenderWindow & win)
   txt.setPosition(335,535);
   win.draw(txt);
   Bonus_type type=manager_sfml.get_active_bonus_type();
-  type=SCHOOL; //DO TESTÓW!!!!!!!!!!
+
+  
   if(type==SCHOOL) draw_bonus_one_info(win);
   else if(type==PLANE) draw_bonus_two_info(win);
   else if(type==BORDER) draw_bonus_three_info(win);
+  else if(type==BRITAIN) draw_bonus_four_info(win);
+  else if(type==RESPIRATOR) draw_bonus_five_info(win);
+  else if(type==LOCKDOWN) draw_bonus_six_info(win);
+  else if(type==SUMMER) draw_bonus_seven_info(win);
+  else if(type==LITE_LOCKDOWN) draw_bonus_eight_info(win);
+  else if(type==DEATH) draw_bonus_nine_info(win);
+  else if(type==ANTIVAXXERS) draw_bonus_ten_info(win);
 }
 
 
@@ -450,4 +458,231 @@ void SFMLapp::draw_bonus_three_info(sf::RenderWindow & win)
     txt2.setString(L"*Musisz ponownie zebrać szczepionki ze wszystkich pól*");
     txt2.setPosition(110,480);
     win.draw(txt2);
+}
+
+//rysuje widok bonusu czwartego 
+void SFMLapp::draw_bonus_four_info(sf::RenderWindow & win)
+{
+    sf::Sprite help=tea;
+    help.setScale(0.4,0.4);
+    help.setPosition(120,-30);
+    win.draw(help);
+
+    txt2.setString(L"Brytyjska herbatka!");
+    txt2.setCharacterSize(30);
+    txt2.setPosition(250,200);
+    win.draw(txt2);
+    txt2.setString(L"Wiadomość z Inspekcji Sanitarnej!");
+    txt2.setCharacterSize(20);
+    txt2.setPosition(230,240);
+    win.draw(txt2);
+    txt2.setString(L"Dominujący wariant koronawirusa to teraz tzw. wariant brytyjski");
+    txt2.setPosition(80,280);
+    win.draw(txt2);
+    txt2.setString(L"Pandemia rozprzestrzenia się coraz szybciej");
+    txt2.setPosition(200,310);
+    win.draw(txt2);
+    txt2.setString(L"*Wirusy przyśpieszają*");
+    txt2.setPosition(280,480);
+    win.draw(txt2);
+
+}
+
+
+//rysuje widok bonusu piątego 
+void SFMLapp::draw_bonus_five_info(sf::RenderWindow & win)
+{
+     sf::Sprite help=red_cross;
+    help.setScale(0.5,0.5);
+    help.setPosition(90,-40);
+    win.draw(help);
+
+    txt2.setString(L"Respirator!");
+    txt2.setCharacterSize(30);
+    txt2.setPosition(300,200);
+    win.draw(txt2);
+    txt2.setString(L"Wiadomość ze Szpitala Narodowego!");
+    txt2.setCharacterSize(20);
+    txt2.setPosition(210,240);
+    win.draw(txt2);
+    txt2.setString(L"Otrzymałeś respirator, który pomoże Ci się zregenerować.");
+    txt2.setPosition(80,280);
+    win.draw(txt2);
+    txt2.setString(L"*Liczba żyć zwiększa się do 4*");
+    txt2.setPosition(240,480);
+    win.draw(txt2);
+}
+
+//rysuje widok bonusu szóstego 
+void SFMLapp::draw_bonus_six_info(sf::RenderWindow & win)
+{
+     sf::Sprite help=lockdown;
+    help.setScale(0.4,0.4);
+    help.setPosition(150,-60);
+    win.draw(help);
+
+    txt2.setString(L"Twardy lockdown!");
+    txt2.setCharacterSize(30);
+    txt2.setPosition(280,200);
+    win.draw(txt2);
+    txt2.setString(L"Wiadomość z Kancelarii Premiera!");
+    txt2.setCharacterSize(20);
+    txt2.setPosition(230,240);
+    win.draw(txt2);
+    txt2.setString(L"Z powodu pogarszającej się sytuacji wprowadzony zostaje twardy lockdown.");
+    txt2.setPosition(10,280);
+    win.draw(txt2);
+    txt2.setString(L"Z powodów gospodarrczych może być utrzymany tylko przez 20 sekund.");
+    txt2.setPosition(10,310);
+    win.draw(txt2);
+    txt2.setString(L"Uwaga: w trakcie lockdownu jeśli trafisz na wirusa wciąż możesz się zarazić!");
+    txt2.setPosition(10,340);
+    win.draw(txt2);
+    txt2.setString(L"*Wirusy przez 20 sekund się nie ruszają*");
+    txt2.setPosition(180,480);
+    win.draw(txt2);
+}
+
+//rysuje widok bonusu siódmego 
+void SFMLapp::draw_bonus_seven_info(sf::RenderWindow & win)
+{
+    sf::Sprite help=sun;
+    help.setScale(0.7,0.7);
+    help.setPosition(20,-130);
+    win.draw(help);
+
+    txt2.setString(L"Wirus w odwrocie!");
+    txt2.setCharacterSize(30);
+    txt2.setPosition(260,200);
+    win.draw(txt2);
+    txt2.setString(L"Wiadomość z Kancelarii Premiera!");
+    txt2.setCharacterSize(20);
+    txt2.setPosition(230,240);
+    win.draw(txt2);
+    txt2.setString(L"Ten wirus jest już w odwrocie!");
+    txt2.setPosition(260,280);
+    win.draw(txt2);
+    txt2.setString(L"Idzie lato, a w lecie wirusy są słabsze!");
+    txt2.setPosition(210,310);
+    win.draw(txt2);
+    txt2.setString(L"Ten wirus jest w odworcie, nie trzeba go się bać!");
+    txt2.setPosition(150,340);
+    win.draw(txt2);
+    txt2.setString(L"*Wirusy wracają na pozycje startowe*");
+    txt2.setPosition(200,480);
+    win.draw(txt2);
+}
+
+
+//rysuje widok bonusu ósmego 
+void SFMLapp::draw_bonus_eight_info(sf::RenderWindow & win)
+{
+     sf::Sprite help=lite_lockdown;
+    help.setScale(0.4,0.4);
+    help.setPosition(120,-30);
+    win.draw(help);
+
+    txt2.setString(L"Lekki lockdown!");
+    txt2.setCharacterSize(30);
+    txt2.setPosition(280,200);
+    win.draw(txt2);
+    txt2.setString(L"Wiadomość z Kancelarii Premiera!");
+    txt2.setCharacterSize(20);
+    txt2.setPosition(230,240);
+    win.draw(txt2);
+    txt2.setString(L"Pogarsza się sytuacja epidemiczna. ");
+    txt2.setPosition(230,280);
+    win.draw(txt2);
+    txt2.setString(L"Powinniśmy wprowadzić lockdown ale gospodarka tego nie wytrzyma.");
+    txt2.setPosition(20,310);
+    win.draw(txt2);
+    txt2.setString(L"Dlatego zamkniemy fryzjerów, szkoły o nieparzystych numerach, sklepy ");
+    txt2.setPosition(10,340);
+    win.draw(txt2);
+    txt2.setString(L"budowlane oraz włoskie restauracje w większych miastach");
+    txt2.setPosition(90,370);
+    win.draw(txt2);
+    txt2.setString(L"*Wirusy zmniejszają prędkość*");
+    txt2.setPosition(230,480);
+    win.draw(txt2);
+}
+
+//rysuje widok bonusu dziewiątego 
+void SFMLapp::draw_bonus_nine_info(sf::RenderWindow & win)
+{
+   sf::Sprite help=grave;
+    help.setScale(0.5,0.5);
+    help.setPosition(350,30);
+    win.draw(help);
+
+    txt2.setString(L"Wzrost śmiertelności!");
+    txt2.setCharacterSize(30);
+    txt2.setPosition(250,200);
+    win.draw(txt2);
+    txt2.setString(L"Wiadomość z Polskiej Akademii Nauk!");
+    txt2.setCharacterSize(20);
+    txt2.setPosition(230,240);
+    win.draw(txt2);
+    txt2.setString(L"Nowa mutacja spowowdowała wzrost śmiertelności. ");
+    txt2.setPosition(150,280);
+    win.draw(txt2);
+    txt2.setString(L"W konsekwencji przyspieszył przebieg zakażenia i zmniejszył się");
+    txt2.setPosition(80,310);
+    win.draw(txt2);
+    txt2.setString(L" współczynnik R.");
+    txt2.setPosition(310,340);
+    win.draw(txt2);
+    txt2.setString(L"Więc ilość zakażeń się zmniejszy. ");
+    txt2.setPosition(260,370);
+    win.draw(txt2);
+    txt2.setString(L"*Ilość wirusów zmniejsza się*");
+    txt2.setPosition(250,480);
+    win.draw(txt2);
+}
+
+
+//rysuje widok bonusu dziesiątego 
+void SFMLapp::draw_bonus_ten_info(sf::RenderWindow & win)
+{
+     sf::Sprite help=antivaxx;
+    help.setScale(0.5,0.5);
+    help.setPosition(330,10);
+    win.draw(help);
+
+    txt2.setString(L"Populacja antyszczepionkowców zwiększa się!");
+    txt2.setCharacterSize(30);
+    txt2.setPosition(50,200);
+    win.draw(txt2);
+    txt2.setString(L"Wiadomość z Głównego Urzędu Statystycznego!");
+    txt2.setCharacterSize(20);
+    txt2.setPosition(180,240);
+    win.draw(txt2);
+    txt2.setString(L"Odnotowaliśmy zwiększenie się ilości antyszczepionkowców.");
+    txt2.setPosition(100,280);
+    win.draw(txt2);
+    txt2.setString(L"Poważnie utrudnia to dalsze szczepienia.");
+    txt2.setPosition(180,310);
+    win.draw(txt2);
+    txt2.setString(L"Ponieważ akcja szczepień jest teraz trudniejsza do przeprowadzenia");
+    txt2.setPosition(60,340);
+    win.draw(txt2);
+    txt2.setString(L"Będziesz dodatkowo premiowany za każdą szczepionkę");
+    txt2.setPosition(130,370);
+    win.draw(txt2);
+    txt2.setString(L"*Od teraz każde szczepienie za dwa punkty*");
+    txt2.setPosition(180,480);
+    win.draw(txt2);
+}
+
+
+//zwraca stan aplikacji
+SFML_state SFMLapp::get_sfml_app_state()
+{
+    return state;
+}
+
+//kończt wyświetlanie bonusów
+void SFMLapp::end_bonus()
+{
+    state=GAME;
 }

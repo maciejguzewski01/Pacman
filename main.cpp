@@ -50,9 +50,11 @@ window.setFramerateLimit(100);
             else if(event.type == sf::Event::KeyPressed) 
               {
                 events_test.key_was_pressed(event);
-                        
-
               }
+              else if(event.type == sf::Event::MouseButtonPressed)
+              {
+                events_test.mouse_was_pressed(event);
+              }   
         }    
         window.clear();
         

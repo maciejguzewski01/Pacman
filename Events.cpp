@@ -32,3 +32,28 @@ void Events::key_was_pressed(sf::Event event)
   }
    
 }
+
+
+
+
+void Events::mouse_was_pressed(sf::Event event)
+{
+  if(sfml_e.get_sfml_app_state()==BONUS) mouse_bonus(event);
+}
+
+
+
+//obsługa kliknięć w trybie bonusów
+void Events::mouse_bonus(sf::Event event)
+{
+   if(event.mouseButton.button==1) return; //prawy
+
+  int x=event.mouseButton.x;
+  int y=event.mouseButton.y;
+
+  if((x>300)and(x<500)and(y>530)and(y<580))
+  {
+      manager_e.end_bonus();
+      sfml_e.end_bonus();
+  }
+}

@@ -80,11 +80,20 @@ void draw_bonus(int row,int col, sf::RenderWindow & win);
    void draw_bonus_one_info(sf::RenderWindow & win);
    void draw_bonus_two_info(sf::RenderWindow & win);
    void draw_bonus_three_info(sf::RenderWindow & win);
+   void draw_bonus_four_info(sf::RenderWindow & win);
+   void draw_bonus_five_info(sf::RenderWindow & win);
+   void draw_bonus_six_info(sf::RenderWindow & win);
+   void draw_bonus_seven_info(sf::RenderWindow & win);
+   void draw_bonus_eight_info(sf::RenderWindow & win);
+   void draw_bonus_nine_info(sf::RenderWindow & win);
+   void draw_bonus_ten_info(sf::RenderWindow & win);
 
     public:
     explicit SFMLapp(Pacman & pacman_sfml, Board & board_sfml,Bonus & bonus_sfml, Manager & manager_sfml);
 
     void draw(sf::RenderWindow & win);
+    SFML_state get_sfml_app_state();
+    void end_bonus();
 };
 
 
