@@ -21,6 +21,11 @@ Bonus_type Bonus::rand_type_of_bonus()
     int number=rand()%10+1;
     bool already_was=false;
    
+   if(idx==0)
+   {
+       number=2;
+       idx++;
+   }
 
    do{
        already_was=false;

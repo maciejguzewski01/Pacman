@@ -117,7 +117,6 @@ void Manager::move_pacman(Move_direction direction)
     {
         is_bonus=true;
         type_of_bonus=bonus_m.get_type_of_bonus( row,  col);
-
         bonus_m.bonus_activated(row,col);
        board_m.delete_bonus(row,col);
        do_something(type_of_bonus);
@@ -228,7 +227,7 @@ void Manager::vec_not_full()
     exit(-1);
   }
   
-  plik<<pacman_m.get_name()<<" "<<get_score()<<" punktów "<<100*(get_done_vaccine_number())/(board_m.get_total_vaccine_number())<<"% populacji"<<std::endl;
+  plik<<pacman_m.get_name()<<" "<<get_score()<<" pkt "<<100*(get_done_vaccine_number())/(board_m.get_total_vaccine_number())<<"% populacji"<<std::endl;
 
   for(size_t i=0;i<results.size()-1;++i)
   {
@@ -351,3 +350,27 @@ Bonus_type Manager::get_active_bonus_type()
 {
     return type_of_bonus;
 }
+
+//zwraca prawdę jeśli wszystkie szczepionki zjedzone 
+ bool Manager::all_vaccine_taken()
+ {
+    if(board_m.get_total_vaccine_number()==vaccines) return true;
+    return false;    
+ }
+
+
+
+ //resetuje zegar clk_lockdown
+ void Manager::reset_clk_lockdown()
+ {
+     clk_lockdown.restart();
+ }
+
+ //resetuje zegar clk_uniform
+ void Manager::reset_clk_uniform()
+ {
+     clk_uniform.restart();
+ }
+
+
+

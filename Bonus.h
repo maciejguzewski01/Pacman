@@ -17,6 +17,7 @@ class Bonus
     std::vector<Bonus_type> bonuses_types;
     std::vector<int> randomize_vec;
   Bonus_type rand_type_of_bonus();
+  int idx=0;
 
     void bonus_one();
     void bonus_two();

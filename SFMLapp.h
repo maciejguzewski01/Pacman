@@ -9,8 +9,9 @@
 #include "Manager.h"
 #include "Bonus.h"
 #include <cstring>
+#include <vector>
 
-enum SFML_state {GAME,BONUS,DIED};
+enum SFML_state {GAME,BONUS,DIED,RESULTS};
 
 class SFMLapp
 {
@@ -47,8 +48,12 @@ sf::Texture pacman_west;
 sf::Sprite pacman;
 
 void draw_game_over(sf::RenderWindow & win);
+void draw_game_results(sf::RenderWindow & win);
+ 
+std::vector<std::string> results;
+int nr=0;
  sf::RectangleShape rect;
-
+bool end=false;
 
 void draw_bonus(int row,int col, sf::RenderWindow & win);
    sf::Texture bell_t;
@@ -94,6 +99,9 @@ void draw_bonus(int row,int col, sf::RenderWindow & win);
     void draw(sf::RenderWindow & win);
     SFML_state get_sfml_app_state();
     void end_bonus();
+    void set_app_state(SFML_state new_state);
+    void end_game();
+
 };
 
 

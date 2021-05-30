@@ -521,3 +521,6 @@ std::vector<sf::Vector2f> Board::get_bonus_vec()
  {
      return level;
  }
+
+
+ 

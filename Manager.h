@@ -67,6 +67,10 @@ bool get_is_bonus_state() const;
 void end_bonus();
 
 Bonus_type get_active_bonus_type();
+bool  all_vaccine_taken();
+
+ void  reset_clk_lockdown();
+ void reset_clk_uniform();
 };
 
 #endif

@@ -223,31 +223,46 @@ void SFMLapp::draw(sf::RenderWindow & win)
         manager_sfml.play(ANY);
     }
     else if(state==DIED) draw_game_over(win);
+    else if(state==RESULTS) draw_game_results(win);
     else exit(-1);      
 
     if(manager_sfml.is_pacman_alive()==false) state=DIED;
+    else if(manager_sfml.all_vaccine_taken()==true) state=DIED;
+    
 }
 
 //rysowanie widoku po śmierci 
 void SFMLapp::draw_game_over(sf::RenderWindow & win)
 {
-   rect.setPosition(100,100);
+   rect.setPosition(0,0);
    rect.setOutlineThickness(1);
    rect.setOutlineColor(sf::Color::Black);
-   rect.setSize(sf::Vector2f(600,400));
-   rect.setFillColor(sf::Color(239,223,0));
+   rect.setSize(sf::Vector2f(800,600));
+   rect.setFillColor(sf::Color(209,162,6));
    win.draw(rect);
-   txt.setFillColor(sf::Color::Black);
-   txt.setString("GAME OVER!");
-   txt.setPosition(130,110);
-   txt.setCharacterSize(100);
-   win.draw(txt);
+   if(manager_sfml.all_vaccine_taken()==false)
+   {
+       txt.setFillColor(sf::Color::Black);
+       txt.setString("GAME OVER!");
+       txt.setPosition(130,110);
+       txt.setCharacterSize(100);
+        win.draw(txt);
+   }
+   else 
+   {
+       txt.setFillColor(sf::Color::Black);
+       txt.setString(L"Gratuluacje, wyszczepiono całą populację!");
+       txt.setPosition(40,110);
+       txt.setCharacterSize(40);
+       win.draw(txt);
+   }
+   
 
    txt.setString(L"Podsumowanie;");
    txt.setPosition(250,240);
    txt.setCharacterSize(50);
    win.draw(txt);
-   txt.setString("Zdobyto "+std::to_string(manager_sfml.get_score()));
+   txt.setString("Zdobyto              "+std::to_string(manager_sfml.get_score()));
    txt.setPosition(110,300);
    txt.setCharacterSize(40);
    win.draw(txt);
@@ -255,7 +270,7 @@ void SFMLapp::draw_game_over(sf::RenderWindow & win)
    txt.setPosition(480,300);
    txt.setCharacterSize(40);
    win.draw(txt);
-   txt.setString("Zaszczepiono "+std::to_string(100*(manager_sfml.get_done_vaccine_number())/(board_sfml.get_total_vaccine_number())));
+   txt.setString("Zaszczepiono     "+std::to_string(100*(manager_sfml.get_done_vaccine_number())/(board_sfml.get_total_vaccine_number())));
    txt.setPosition(110,350);
    txt.setCharacterSize(40);
    win.draw(txt);
@@ -263,14 +278,94 @@ void SFMLapp::draw_game_over(sf::RenderWindow & win)
    txt.setPosition(480,350);
    txt.setCharacterSize(40);
    win.draw(txt);
-   rect.setSize(sf::Vector2f(170,40));
-   rect.setPosition(295,420);
-   win.draw(rect);
-   txt.setString(L"KONTYNUUJ");
-   txt.setPosition(300,420);
-   txt.setCharacterSize(30);
-   win.draw(txt);
+    win.draw(back);
+  back.setSize(sf::Vector2f(250,50));
+  back.setPosition(275,530);
+  back.setFillColor(sf::Color::Green);
+  back.setOutlineColor(sf::Color::Black);
+  back.setOutlineThickness(1);
+  win.draw(back);
+  txt.setFillColor(sf::Color::Black);
+  txt.setString(L"Porównaj wyniki");
+  txt.setCharacterSize(30);
+  txt.setPosition(290,535);
+  win.draw(txt);
 }
+
+
+//rysowanie widoku RESULTS 
+void SFMLapp::draw_game_results(sf::RenderWindow & win)
+{
+    rect.setPosition(0,0);
+   rect.setOutlineThickness(1);
+   rect.setOutlineColor(sf::Color::Black);
+   rect.setSize(sf::Vector2f(800,600));
+   rect.setFillColor(sf::Color(209,162,6));
+   win.draw(rect);
+   txt2.setString(L"Zobacz jak poradzili sobie ministrowie w równoległych wszechświatach!");
+   txt2.setCharacterSize(20);
+   txt2.setPosition(30,30);
+   win.draw(txt2);
+
+if(nr==0)
+ {
+    std::ifstream plik("../wyniki.txt");
+  if(!plik)
+  {
+    std::cerr<<"Błąd: "<<strerror(errno)<<std::endl;
+    exit(-1);
+  }
+    int idx=0;
+    while(plik)
+    {
+      results.push_back("");    
+      getline(plik, results[idx]);
+    idx++;
+    }
+   plik.close();
+   nr++;
+ }
+  
+   back.setSize(sf::Vector2f(600,3));
+   back.setFillColor(sf::Color::Black);
+   sf::RectangleShape r;
+   r.setSize(sf::Vector2f(3,40));
+   r.setFillColor(sf::Color::Black);
+
+   
+  
+   for(size_t i=0;i<results.size();++i)
+   {
+       txt2.setString(results[i]);
+       txt2.setPosition(250,80+40*i);
+       win.draw(txt2);
+       back.setPosition(100,78+40*i);
+       win.draw(back);
+       if(i==results.size()-1) break;
+       r.setPosition(100,78+40*i);
+       win.draw(r);
+       r.setPosition(700,78+40*i);
+       win.draw(r);
+   }
+
+   back.setSize(sf::Vector2f(250,50));
+  back.setPosition(275,530);
+  back.setFillColor(sf::Color::Green);
+  back.setOutlineColor(sf::Color::Black);
+  back.setOutlineThickness(1);
+  win.draw(back);
+  txt.setFillColor(sf::Color::Black);
+  txt.setString(L"Złóż dymisję");
+  txt.setCharacterSize(30);
+  txt.setPosition(330,535);
+  win.draw(txt);
+
+  if(end==true) win.close();
+ 
+}
+
+
+
 
 //rysowanie ikonki bonusu
 void SFMLapp::draw_bonus(int row,int col, sf::RenderWindow & win)
@@ -685,4 +780,17 @@ SFML_state SFMLapp::get_sfml_app_state()
 void SFMLapp::end_bonus()
 {
     state=GAME;
+}
+
+
+//ustawia zadany tryb aplikacji 
+void SFMLapp::set_app_state(SFML_state new_state)
+{
+   state=new_state;
+}
+
+//kończy grę
+void SFMLapp::end_game()
+{
+   end=true;
 }
