@@ -5,7 +5,7 @@ project (PACMAN)
 #####################################################################
 # Tu wymień wszystkie pliki .cpp, z których składa się projekt (rozdzielone spacją)
 
-set ( SOURCES main.cpp  Pacman.cpp Coronavirus.cpp Board.cpp Manager.cpp SFMLapp.cpp Events.cpp Bonus.cpp)
+set ( SOURCES main.cpp  Pacman.cpp Coronavirus.cpp Board.cpp Manager.cpp SFMLapp.cpp Events.cpp Bonus.cpp Start.cpp)
 
 #####################################################################
 
