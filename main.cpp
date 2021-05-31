@@ -30,6 +30,7 @@ sf::RenderWindow window(sf::VideoMode(800, 600), "TEST");
 window.setVerticalSyncEnabled(false);
 window.setFramerateLimit(100);
 
+
 sf::RenderWindow window_start(sf::VideoMode(800, 600), "START");
 window_start.setVerticalSyncEnabled(false);
 window_start.setFramerateLimit(5);
@@ -65,9 +66,9 @@ while (window_start.isOpen())
     }
 
 
-Pacman pacman_test("nazwa");
+Pacman pacman_test(start_test.get_choosed_name());
    
-    Board board_test(pacman_test,FIRST,FIVE);
+    Board board_test(pacman_test,start_test.get_choosed_level(),start_test.get_choosed_board());
     
     Bonus bonus_test(pacman_test,board_test);
    

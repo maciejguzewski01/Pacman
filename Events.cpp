@@ -38,12 +38,25 @@ void Events::key_was_pressed(sf::Event event)
 
 void Events::mouse_was_pressed(sf::Event event)
 {
-  if(sfml_e.get_sfml_app_state()==BONUS) mouse_bonus(event);
+  if(sfml_e.get_sfml_app_state()==INTRODUCTION) mouse_intro(event);
+  else if(sfml_e.get_sfml_app_state()==BONUS) mouse_bonus(event);
   else if(sfml_e.get_sfml_app_state()==DIED) mouse_died(event);
   else if(sfml_e.get_sfml_app_state()==RESULTS) mouse_results(event);
 }
 
+//obsługa kliknięć w trybie intro
+void Events::mouse_intro(sf::Event event)
+{
+    if(event.mouseButton.button==1) return; //prawy
 
+  int x=event.mouseButton.x;
+  int y=event.mouseButton.y;
+  
+  if((x>350)and(x<450)and(y>180)and(y<210))
+  {
+     sfml_e.set_app_state(GAME);
+  }
+}
 
 //obsługa kliknięć w trybie bonusów
 void Events::mouse_bonus(sf::Event event)

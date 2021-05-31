@@ -11,7 +11,7 @@
 #include <cstring>
 #include <vector>
 
-enum SFML_state {GAME,BONUS,DIED,RESULTS};
+enum SFML_state {INTRODUCTION,GAME,BONUS,DIED,RESULTS};
 
 class SFMLapp
 {
@@ -49,12 +49,13 @@ sf::Sprite pacman;
 
 void draw_game_over(sf::RenderWindow & win);
 void draw_game_results(sf::RenderWindow & win);
+void draw_introduction(sf::RenderWindow & win);
  
 std::vector<std::string> results;
 int nr=0;
  sf::RectangleShape rect;
 bool end=false;
-
+int n=0;
 void draw_bonus(int row,int col, sf::RenderWindow & win);
    sf::Texture bell_t;
    sf::Sprite bell;

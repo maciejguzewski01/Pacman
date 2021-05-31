@@ -21,6 +21,7 @@ class Events
    
    void   mouse_bonus(sf::Event event);
    void mouse_results(sf::Event event);
+   void mouse_intro(sf::Event event);
   public:
   explicit Events(Pacman & pacman_e, Board & board_e,Bonus & bonus_e,Manager & manager_e,SFMLapp & sfml_e);
   void key_was_pressed(sf::Event event);

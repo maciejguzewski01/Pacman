@@ -6,7 +6,7 @@
 SFMLapp::SFMLapp(Pacman & pacman_sfml, Board & board_sfml,Bonus & bonus_sfml, Manager & manager_sfml): pacman_sfml(pacman_sfml), board_sfml(board_sfml), bonus_sfml(bonus_sfml), manager_sfml(manager_sfml)
 {
 
-   state=GAME;
+   state=INTRODUCTION;
   
    wall.setSize(sf::Vector2f(20,20));
    wall.setFillColor(sf::Color(128,128,128));
@@ -213,7 +213,7 @@ void SFMLapp::pacman_icon_movment()
 //funkcja rysująca
 void SFMLapp::draw(sf::RenderWindow & win)
 {
-    
+    if(state==INTRODUCTION) draw_introduction(win);
     if(manager_sfml.get_is_bonus_state()==true) state=BONUS; 
 
     if(state==BONUS) draw_bonus_info(win);
@@ -224,12 +224,54 @@ void SFMLapp::draw(sf::RenderWindow & win)
     }
     else if(state==DIED) draw_game_over(win);
     else if(state==RESULTS) draw_game_results(win);
-    else exit(-1);      
-
-    if(manager_sfml.is_pacman_alive()==false) state=DIED;
-    else if(manager_sfml.all_vaccine_taken()==true) state=DIED;
+          
+  
+  if(n==0)
+  {
+      if((manager_sfml.is_pacman_alive()==false)or(manager_sfml.all_vaccine_taken()==true))
+      {
+         state=DIED;
+         ++n;
+       }   
+  }
+    
     
 }
+
+//rysowanie widoku INTRODUCTION
+void SFMLapp::draw_introduction(sf::RenderWindow & win)
+{
+    draw_board(win);
+
+    rect.setOutlineColor(sf::Color::Black);
+    rect.setOutlineThickness(1);
+    rect.setPosition(100,30);
+    rect.setSize(sf::Vector2f(600,200));
+    rect.setFillColor(sf::Color(209,162,6));
+    win.draw(rect);
+    rect.setFillColor(sf::Color(0,153,0));
+    rect.setSize(sf::Vector2f(100,30));
+    rect.setPosition(350,180);
+    win.draw(rect);
+    txt2.setString("START");
+    txt2.setCharacterSize(20);
+    txt2.setPosition(360,185);
+    win.draw(txt2);
+
+    txt2.setString(L"1. Poruszaj pacmanem strzałkami");
+    txt2.setPosition(200,50);
+    win.draw(txt2);
+    txt2.setString(L"2. Wyszczep całą populację");
+    txt2.setPosition(230,80);
+    win.draw(txt2);
+    txt2.setString(L"3. Unikaj zakażenia koronawirusem");
+    txt2.setPosition(200,110);
+    win.draw(txt2);
+    txt2.setString(L"4. Aktywuj bonusy");
+    txt2.setPosition(290,140);
+    win.draw(txt2);
+}
+
 
 //rysowanie widoku po śmierci 
 void SFMLapp::draw_game_over(sf::RenderWindow & win)

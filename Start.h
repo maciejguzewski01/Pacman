@@ -9,7 +9,7 @@
 #include "Board.h"
 
 
-enum App_screen{HELLO,LEVEL, BOARD_TYPE,NAME,INSTRUCTION};
+enum App_screen{HELLO,LEVEL, BOARD_TYPE,NAME,INSTRUCTION_ONE,INSTRUCTION_TWO};
 class Start
 {
     sf::Font font1,font2;
@@ -35,10 +35,21 @@ class Start
     sf::Sprite five;
     sf::Texture five_t;
 
+    sf::Sprite boss;
+    sf::Texture boss_t;
+    sf::Sprite smoke;
+    sf::Texture smoke_t;
+    sf::Sprite vaccine;
+    sf::Texture vaccine_t;
+    sf::Sprite smoke_two;
+    sf::Texture smoke_two_t;
+
     void draw_hello_state(sf::RenderWindow & win);
     void draw_level_state(sf::RenderWindow & win);
     void draw_board_type_state(sf::RenderWindow & win);
     void draw_name_state(sf::RenderWindow & win);
+    void draw_instruction_one_state(sf::RenderWindow & win);
+    void draw_instruction_two_state(sf::RenderWindow & win);
 
     Level_name choosed_level;
     Board_order choosed_board;
@@ -48,6 +59,10 @@ class Start
     void mouse_level_state(sf::Event event);
     void mouse_board_type_state(sf::Event event);
     void mouse_name_state(sf::Event event);
+    void mouse_instruction_one_state(sf::Event event);
+    void mouse_instruction_two_state(sf::Event event);
+    
+    bool end=false;
 
     public:
     explicit Start();
@@ -55,6 +70,9 @@ class Start
     void mouse_was_pressed(sf::Event event);
     void text_was_entered(sf::Event event);
     
+    Level_name get_choosed_level();
+    Board_order get_choosed_board();
+    std::string get_choosed_name();
 };
 
 

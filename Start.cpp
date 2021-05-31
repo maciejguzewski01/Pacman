@@ -66,16 +66,36 @@ Start::Start()
    five.setTexture(five_t);
    five.setScale(0.25,0.25);
 
+   boss_t.loadFromFile("../resources/boss.png");
+   boss.setTexture(boss_t);
+   boss.setScale(1,1);
+
+   smoke_t.loadFromFile("../resources/smoke.png");
+   smoke.setTexture(smoke_t);
+   smoke.setScale(1,1);
+   
+   vaccine_t.loadFromFile("../resources/vaccine.png");
+   vaccine.setTexture(vaccine_t);
+   vaccine.setScale(1,1);
+
+   smoke_two_t.loadFromFile("../resources/smoke_two.png");
+   smoke_two.setTexture(smoke_two_t);
+   smoke_two.setScale(1,1);
+
+
    
 }
 
 
 void Start::draw(sf::RenderWindow & win)
 {
+    if(end==true) win.close();
    if(state==HELLO) draw_hello_state(win);
    else if(state==LEVEL) draw_level_state(win);
    else if(state==BOARD_TYPE) draw_board_type_state(win);
    else if(state==NAME) draw_name_state(win);
+   else if(state==INSTRUCTION_ONE) draw_instruction_one_state(win);
+   else if(state==INSTRUCTION_TWO) draw_instruction_two_state(win);
 }
 
 
@@ -252,6 +272,103 @@ void Start::draw_name_state(sf::RenderWindow & win)
 }
 
 
+
+//rysowanie aplikacji w trybie INSTRUCTION_ONE 
+void Start::draw_instruction_one_state(sf::RenderWindow & win)
+{
+    boss.setPosition(600,10);
+    win.draw(boss);
+
+    rect.setOutlineColor(sf::Color::Black);
+    rect.setOutlineThickness(1);
+    rect.setSize(sf::Vector2f(150,50));
+    rect.setFillColor(sf::Color(0,153,0));
+    rect.setPosition(200,300);
+    win.draw(rect);
+    txt2.setString(L"Jaka?");
+    txt2.setCharacterSize(30);
+    txt2.setPosition(240,305);
+    win.draw(txt2);
+
+    txt2.setCharacterSize(30);
+    txt2.setString(L"Witaj urzędniku!");
+    txt2.setPosition(200,50);
+    win.draw(txt2);
+    txt2.setCharacterSize(20);
+
+    txt2.setString(L"Właśnie zostałeś powołany na nowego Ministra Zdrowia.");
+    txt2.setPosition(20,100);
+    win.draw(txt2);
+  
+    if(choosed_level==FIRST) txt2.setString(L"Do kraju dotarła właśnie epidemia nowej choroby.");
+    else if(choosed_level==SECOND) txt2.setString(L"Od wielu miesięcy w kraju szaleje pandemia.");
+    else txt2.setString(L"Już prawie rok trwa pandemia.");
+    
+    txt2.setPosition(20,130);
+    win.draw(txt2);
+
+    txt2.setString(L"Obywatele masowo umierają, a gospodarka jest w ruinie.");
+    txt2.setPosition(20,160);
+    win.draw(txt2);
+
+    txt2.setString(L"Na szczęście pojawiła się nadzieja!");
+    txt2.setPosition(110,190);
+    win.draw(txt2);
+
+    smoke.setPosition(0,10);
+    win.draw(smoke);
+
+ 
+
+}
+
+
+//rysowanie aplikacji w trybie INSTRUCTION_TWO
+void Start::draw_instruction_two_state(sf::RenderWindow & win)
+{
+    boss.setPosition(600,10);
+    win.draw(boss);
+
+    txt2.setCharacterSize(20);
+    txt2.setString(L"Szczepionki!");
+    txt2.setPosition(300,50);
+    win.draw(txt2);
+
+     txt2.setString(L"I twoim zadaniem będzie je wykorzystać.");
+    txt2.setPosition(120,80);
+    win.draw(txt2);
+
+     txt2.setString(L"Wyszczep całą poplucję zanim wszycy umrzemy!");
+    txt2.setPosition(80,110);
+    win.draw(txt2);
+
+     txt2.setString(L"Pamiętaj że sytuacja jest dynamiczna");
+    txt2.setPosition(150,140);
+    win.draw(txt2);
+     txt2.setString(L"więc wszystko może się zmieniać.");
+    txt2.setPosition(170,170);
+    win.draw(txt2);
+    txt2.setString(L"Odpowiednie urzędy będą Cię informować.");
+    txt2.setPosition(100,200);
+    win.draw(txt2);
+    
+
+    rect.setOutlineColor(sf::Color::Black);
+    rect.setOutlineThickness(1);
+    rect.setSize(sf::Vector2f(350,50));
+    rect.setFillColor(sf::Color(0,153,0));
+    rect.setPosition(180,300);
+    win.draw(rect);
+    txt2.setString(L"Podejmuję wyzwanie!");
+    txt2.setCharacterSize(30);
+    txt2.setPosition(190,305);
+    win.draw(txt2);
+    
+    smoke_two.setPosition(50,10);
+    win.draw(smoke_two);
+}
+
+
 //obsługa kliknięć myszką 
 void Start::mouse_was_pressed(sf::Event event)
 {
@@ -259,6 +376,8 @@ void Start::mouse_was_pressed(sf::Event event)
     else if(state==LEVEL) mouse_level_state(event);
     else if(state==BOARD_TYPE) mouse_board_type_state(event);
     else if(state==NAME) mouse_name_state(event);
+    else if(state==INSTRUCTION_ONE) mouse_instruction_one_state(event);
+    else if(state==INSTRUCTION_TWO) mouse_instruction_two_state(event);
 
 }
 
@@ -355,7 +474,37 @@ void Start::mouse_name_state(sf::Event event)
 
    if((x>300)and(x<500)and(y>300)and(y<350))
   {
-    state=INSTRUCTION; 
+    state=INSTRUCTION_ONE; 
+  }
+}
+
+//obsługa kliknięć myszką w trybie INSTRUCTION_ONE 
+void Start::mouse_instruction_one_state(sf::Event event)
+{
+  if(event.mouseButton.button==1) return; //prawy
+
+  int x=event.mouseButton.x;
+  int y=event.mouseButton.y;
+  
+
+   if((x>200)and(x<350)and(y>300)and(y<350))
+  {
+    state=INSTRUCTION_TWO; 
+  }
+}
+
+//obsługa kliknięć myszką w trybie INSTRUCTION_TWO 
+void Start::mouse_instruction_two_state(sf::Event event)
+{
+  if(event.mouseButton.button==1) return; //prawy
+
+  int x=event.mouseButton.x;
+  int y=event.mouseButton.y;
+  
+
+   if((x>180)and(x<530)and(y>300)and(y<350))
+  {
+    end=true; 
   }
 }
 
@@ -369,4 +518,23 @@ void Start::text_was_entered(sf::Event event)
      return;
  }
  choosed_name=choosed_name+help;
+}
+
+
+//zwraca wybrany poziom
+Level_name Start::get_choosed_level()
+{
+   return choosed_level;
+}
+
+//zwraca wybraną planszę 
+Board_order Start::get_choosed_board()
+{
+   return choosed_board;
+}
+
+//zwraca wybraną nazwę
+std::string Start::get_choosed_name()
+{
+   return choosed_name;
 }

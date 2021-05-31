@@ -248,7 +248,7 @@ void Manager::vec_full()
     exit(-1);
   }
   
-  plik<<pacman_m.get_name()<<" "<<get_score()<<" punktów "<<100*(get_done_vaccine_number())/(board_m.get_total_vaccine_number())<<"% populacji"<<std::endl;
+  plik<<pacman_m.get_name()<<" "<<get_score()<<" pkt "<<100*(get_done_vaccine_number())/(board_m.get_total_vaccine_number())<<"% populacji"<<std::endl;
 
   for(size_t i=0;i<9;++i)
   {
