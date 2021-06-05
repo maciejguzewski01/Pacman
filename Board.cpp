@@ -6,7 +6,6 @@ Board::Board(Pacman & pacman_b, Level_name level, Board_order choosed_board): pa
 {
     virues_speed=0.2;
     
-   
     for(int row=0;row<=29;++row)
     {
         for(int col=0;col<=39;++col)
@@ -24,6 +23,8 @@ Board::Board(Pacman & pacman_b, Level_name level, Board_order choosed_board): pa
     
 }
 
+//----------------------------
+//FUNKCJE GENERUJĄCE STAN POCZĄTKOWY 
 
 //generuje ilość i położenie bonusów
 void Board::generate_bonus()
@@ -116,7 +117,6 @@ void Board::generate_random()
 {
   int number_of_walls=rand()%450+10;
 
-  int row,col;
   int placed_walls=0;
 
   while(placed_walls!=number_of_walls)
@@ -129,7 +129,7 @@ void Board::generate_random()
       fields[row][col].has_wall=true;
       placed_walls++;
   }
-  
+ 
 }
 
 //generuje planszę jeśli wybrano tryb jeden
@@ -293,129 +293,18 @@ void Board::generate_vaccines()
       }
       
   }
-
- 
 }
 
 
-//zwraca całkowitą ilość szczepionek 
-int Board::get_total_vaccine_number()
-{
-    return total_number_of_vaccine;
-}
 
-
-//sprawdza czy pacman może wykonać dany ruch
-bool Board::can_pacman_move(Move_direction direction)
-{
-  sf::Vector2f plan;
-  plan=pacman_b.get_next_field_location(direction);
-  int row=plan.y;
-  int col=plan.x;
-  
- 
-
-  if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
-  if(fields[row][col].has_wall) return false;
-
-  
-
-  return true;
-}
-
-
-//sprawdza czy dany wirus może wykonać dany ruch
-bool Board::can_virus_move(int number,Move_direction direction)
-{
-  sf::Vector2f plan;
-  plan=viruses[number].get_next_field_location(direction);
-  int row=plan.y;
-  int col=plan.x;
-
-  if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
-  if(fields[row][col].has_wall==true) return false;
-
-  
-
-  return true;
-}
+//------------------------------------------------
+//FUNKCJE MODYFIKUJĄCE STAN OBIEKTU
 
 //porusza wirusem
 void Board::move_virus(int number, Move_direction direction)
 {
     viruses[number].move(direction);
 }
-
-
-
-//sprawdza czy na danym polu jest ściana
-bool Board::is_wall_on_field(int row,int col)
-{
- if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
- if(fields[row][col].has_wall==true) return true;
- return false;
-}
-
-//sprawdza czy na danym polu jest szczepionka
-bool Board::is_vaccine_on_field(int row,int col)
-{
-    if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
-   if(fields[row][col].has_vaccine==true) return true;
-   return false;
-}
-
-//sprawdza czy na danym polu jest pacman
-bool Board::is_pacman_on_field(int row,int col)
-{
-    if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
-    sf::Vector2f position;
-    position=pacman_b.get_position();
-    int x=position.x;
-    int y=position.y;
-    if((x==col) and(y==row)) return true;
-    return false;
-   
-}
-
-//sprawdza czy na danym polu jest jakikolwiek wirus
-bool Board::is_any_virus_on_field(int row,int col)
-{
-    if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
- for(size_t i=0;i<viruses.size();i++)
- {
-     sf::Vector2f position=viruses[i].get_position();
-     int x=position.x;
-     int y=position.y;
-     if((col==x)and(row==y)) return true;
- }
-
- return false;
-}
-
-//sprawdza czy na danym polu jest bonus 
-bool Board::is_bonus_on_field(int row,int col)
-{
-   if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
-    
-    for(size_t i=0;i<bonus_vec.size();i++)
-     {
-     if(bonus_vec[i]==sf::Vector2f(-1,-1)) continue;
-     int x=bonus_vec[i].x;
-     int y=bonus_vec[i].y;
-     if((col==x)and(row==y)) return true;
-     }
-     return false;
-}
-
-//zwraca pozycję wirusa o podanym numerze
-sf::Vector2f Board::get_position_of_virus_number(int number)
-{
-    int size=viruses.size();
-    if((number<0)or(number>size-1)) exit(-1);
-   return viruses[number].get_position();
-}
-
-
 
 //usuwa szczepionkę z pola
 void Board::vaccinate(int row,int col)
@@ -424,20 +313,11 @@ void Board::vaccinate(int row,int col)
     fields[row][col].has_vaccine=false;
 }
 
-//zwraca ilość wirusów na planszy
-int Board::get_number_of_viruses()
-{
-   int size=viruses.size();
-   return size;
-}
-
-
 //resetuje pozycje wirusów
 void Board::reset_viruses()
 {
     for(int i=0;i<get_number_of_viruses();i++)
-      {
-          
+      {   
           viruses[i].set_position_to(10+i+1,15);
       }
 }
@@ -449,47 +329,7 @@ void Board::reset()
       reset_viruses();
 }
 
-
-//zwraca prędkość wirusów
-double Board::get_viruses_speed()
-{
-    return virues_speed;
-}
-
-
-//zwraca numer bonusu na podanej pozycji
-int Board::get_number_of_bonus(int row,int col)
-{
-    if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
-    
-    for(size_t i=0;i<bonus_vec.size();++i)
-    {
-        if((col==bonus_vec[i].x)and(row==bonus_vec[i].y)) return i;
-    }
-
-    return -1;
-
-}
-
-//zwraca wektor bonusów 
-std::vector<sf::Vector2f> Board::get_bonus_vec()
-{
-    return bonus_vec;
-}
-
-
- void Board::delete_bonus(int row, int col)
- {
-    if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
-    
-    fields[row][col].has_bonus=false;
-    
-    int nr=get_number_of_bonus( row,col);
-   bonus_vec[nr]=sf::Vector2f(-1,-1);
- }
-
-
- //dodaje wirusa
+//dodaje wirusa
  void Board::add_virus()
  {
      int i=get_number_of_viruses();
@@ -515,6 +355,155 @@ std::vector<sf::Vector2f> Board::get_bonus_vec()
    total_number_of_vaccine++;
  }
 
+//usuwa bonus 
+void Board::delete_bonus(int row, int col)
+{
+    if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
+    
+    fields[row][col].has_bonus=false;
+    
+    int nr=get_number_of_bonus( row,col);
+   bonus_vec[nr]=sf::Vector2f(-1,-1);
+}
+
+//------------------------------------------------
+//FUNKCJE ZWRACAJĄCE INFORMACJE 
+
+//zwraca całkowitą ilość szczepionek 
+int Board::get_total_vaccine_number() const
+{
+    return total_number_of_vaccine;
+}
+
+//sprawdza czy pacman może wykonać dany ruch
+bool Board::can_pacman_move(Move_direction direction) const
+{
+  sf::Vector2f plan;
+  plan=pacman_b.get_next_field_location(direction);
+  int row=plan.y;
+  int col=plan.x;
+  
+  if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
+  if(fields[row][col].has_wall) return false;
+
+  return true;
+}
+
+
+//sprawdza czy dany wirus może wykonać dany ruch
+bool Board::can_virus_move(int number,Move_direction direction) const
+{
+  sf::Vector2f plan;
+  plan=viruses[number].get_next_field_location(direction);
+  int row=plan.y;
+  int col=plan.x;
+
+  if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
+  if(fields[row][col].has_wall==true) return false;
+
+  return true;
+}
+
+
+//sprawdza czy na danym polu jest ściana
+bool Board::is_wall_on_field(int row,int col) const
+{
+ if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
+ if(fields[row][col].has_wall==true) return true;
+ return false;
+}
+
+//sprawdza czy na danym polu jest szczepionka
+bool Board::is_vaccine_on_field(int row,int col) const
+{
+    if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
+   if(fields[row][col].has_vaccine==true) return true;
+   return false;
+}
+
+//sprawdza czy na danym polu jest pacman
+bool Board::is_pacman_on_field(int row,int col) const
+{
+    if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
+    sf::Vector2f position;
+    position=pacman_b.get_position();
+    int x=position.x;
+    int y=position.y;
+    if((x==col) and(y==row)) return true;
+    return false;
+   
+}
+
+//sprawdza czy na danym polu jest jakikolwiek wirus
+bool Board::is_any_virus_on_field(int row,int col) const
+{
+    if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
+ for(size_t i=0;i<viruses.size();i++)
+ {
+     sf::Vector2f position=viruses[i].get_position();
+     int x=position.x;
+     int y=position.y;
+     if((col==x)and(row==y)) return true;
+ }
+ return false;
+}
+
+//sprawdza czy na danym polu jest bonus 
+bool Board::is_bonus_on_field(int row,int col) const
+{
+   if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
+    
+    for(size_t i=0;i<bonus_vec.size();i++)
+     {
+     if(bonus_vec[i]==sf::Vector2f(-1,-1)) continue;
+     int x=bonus_vec[i].x;
+     int y=bonus_vec[i].y;
+     if((col==x)and(row==y)) return true;
+     }
+     return false;
+}
+
+//zwraca pozycję wirusa o podanym numerze
+sf::Vector2f Board::get_position_of_virus_number(int number) const
+{
+    int size=viruses.size();
+    if((number<0)or(number>size-1)) exit(-1);
+   return viruses[number].get_position();
+}
+
+//zwraca ilość wirusów na planszy
+int Board::get_number_of_viruses() const
+{
+   int size=viruses.size();
+   return size;
+}
+
+//zwraca prędkość wirusów
+double Board::get_viruses_speed() const
+{
+    return virues_speed;
+}
+
+
+//zwraca numer bonusu na podanej pozycji
+int Board::get_number_of_bonus(int row,int col) const
+{
+    if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
+    
+    for(size_t i=0;i<bonus_vec.size();++i)
+    {
+        if((col==bonus_vec[i].x)and(row==bonus_vec[i].y)) return i;
+    }
+
+    return -1;
+
+}
+
+//zwraca wektor bonusów 
+std::vector<sf::Vector2f> Board::get_bonus_vec() const
+{
+    return bonus_vec;
+}
 
  //zwraca poziom
  Level_name Board::get_level() const

@@ -8,6 +8,12 @@
 #include <string>
 #include "Board.h"
 
+//Klasa odpowiadająca za ustalenie stanu początkowego 
+/*
+1. ustala imię gracza, nr planszy, poziom trudności
+2. wyświetla początkowe etapy gry 
+3. obsługuje zdarzenia na początkowym etapie 
+*/
 
 enum App_screen{HELLO,LEVEL, BOARD_TYPE,NAME,INSTRUCTION_ONE,INSTRUCTION_TWO};
 class Start
@@ -70,9 +76,9 @@ class Start
     void mouse_was_pressed(sf::Event event);
     void text_was_entered(sf::Event event);
     
-    Level_name get_choosed_level();
-    Board_order get_choosed_board();
-    std::string get_choosed_name();
+    Level_name get_choosed_level() const;
+    Board_order get_choosed_board() const;
+    std::string get_choosed_name() const;
 };
 
 

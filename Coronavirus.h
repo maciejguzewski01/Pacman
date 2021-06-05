@@ -5,6 +5,10 @@
 #include "Pacman.h"
 
 //TA KLASA JEST MATEMATYCZNĄ REPREZENTACJĄ KORONAWIRUSA (duchy)
+/* Zadania;
+1. zna numer wirusa (dany przy inicjalizacji wirusa)
+2. zna, modyfikuje i zwraca pozycję wirusa (w tym ustawia wirusa na zadanym polu)
+*/
 
 
 class Coronavirus
@@ -16,13 +20,13 @@ class Coronavirus
   public:
   explicit Coronavirus(int nr);
 
-  sf::Vector2f get_position() const;
+ //funkcje modyfikujące obiekt  
   void move(Move_direction direction);
-  sf::Vector2f get_next_field_location(Move_direction direction);
-  
   void set_position_to(int row,int col);
-  
 
+  //Funkcje zwracające informacje 
+   sf::Vector2f get_position() const;
+   sf::Vector2f get_next_field_location(Move_direction direction) const;
 };
 
 

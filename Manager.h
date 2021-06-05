@@ -13,6 +13,13 @@
 #include <cstdlib>
 #include <fstream>
 
+//Zarządza grą 
+/*Zadania;
+1. zna, liczy i zwraca punkty oraz ilość zjedzonych szczepiomek 
+2. wykonuje ruchy (w szczególności algorytm ruchu wirusów) i obsługuje ich ewentualne konswkwencje (śmierć, zjedzenie szczepionki/bonusu)
+3. reaguje na aktywacje bonusu
+
+*/
 class Manager
 {
     int score;
@@ -30,7 +37,7 @@ class Manager
    bool uniform=false;
 
    void move_pacman(Move_direction direction);
-   bool did_pacman_meet_virus();
+   bool did_pacman_meet_virus() const;
    void pacman_meet_virus();
 
    std::vector<Move_direction> viruses_directions;
@@ -59,18 +66,20 @@ class Manager
   
   void play(Move_direction direction);
 
-  int get_score() const;
-bool is_pacman_alive();
+void end_bonus();
+void  reset_clk_lockdown();
+void reset_clk_uniform();
+
+
+bool is_pacman_alive() const;
+int get_score() const;
 int get_done_vaccine_number() const;
 bool get_uniform_state() const;
 bool get_is_bonus_state() const;
-void end_bonus();
+Bonus_type get_active_bonus_type() const;
+bool  all_vaccine_taken() const;
 
-Bonus_type get_active_bonus_type();
-bool  all_vaccine_taken();
-
- void  reset_clk_lockdown();
- void reset_clk_uniform();
+ 
 };
 
 #endif

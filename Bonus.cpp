@@ -1,7 +1,7 @@
 #include "Bonus.h"
 #include <iostream>
 
-
+//konstruktor 
 Bonus::Bonus(Pacman & pacman_b, Board & board_b): pacman_b(pacman_b), board_b(board_b)
 {
     std::vector <sf::Vector2f> bonuses=board_b.get_bonus_vec();
@@ -13,6 +13,8 @@ Bonus::Bonus(Pacman & pacman_b, Board & board_b): pacman_b(pacman_b), board_b(bo
     }
 }
 
+//-------------------------------------------------
+//USTALANIE STANU POCZĄTKOWEGO
 
 //losuje rodzaj bonusu
 Bonus_type Bonus::rand_type_of_bonus()
@@ -36,7 +38,7 @@ Bonus_type Bonus::rand_type_of_bonus()
       if(already_was==true) number=rand()%10+1;
    }while(already_was==true);
 
-randomize_vec[randomize_vec.size()-1]=number;
+    randomize_vec[randomize_vec.size()-1]=number;
  
     if(number==1) return SCHOOL;
     if(number==2) return PLANE;
@@ -47,23 +49,12 @@ randomize_vec[randomize_vec.size()-1]=number;
     if(number==7) return SUMMER;
     if(number==8) return LITE_LOCKDOWN;
     if(number==9) return DEATH;
-    if(number==10) return ANTIVAXXERS;
-   
+    if(number==10) return ANTIVAXXERS;  
    exit(-1);
 }
 
-
-Bonus_type Bonus::get_type_of_bonus(int row, int col)
-{
-    if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
-    int nr=board_b.get_number_of_bonus(row,col);
-    int size=bonuses_types.size();
-    if((nr<0)or(nr>size)) return NONE;
-    return bonuses_types[nr];
-   
-}
-
-
+//-------------------------------------------------
+//OBSŁUGA BONUSÓW 
 
 //sprawdza jaki bonus został uruchomiony i przekazuje sterowanie do odpowiedniej funkcji 
 void Bonus::bonus_activated(int row, int col)
@@ -100,7 +91,7 @@ void Bonus::bonus_activated(int row, int col)
    }
 }
 
-
+//konkretne funkcje do konkretnych bonusów (niektóre nie muszą nic robić)
 
 //obsługa bonusu nr 1
 void Bonus::bonus_one()
@@ -116,7 +107,7 @@ void Bonus::bonus_one()
 //obsługa bonusu nr 2
 void Bonus::bonus_two()
 {
-    
+    //
 }
 
 //obsługa bonusu nr 3
@@ -173,9 +164,7 @@ void Bonus::bonus_eight()
     double speed;
     speed=board_b.get_viruses_speed();
     speed=speed*2;
-    board_b.set_viruses_speed(speed);
-
-    
+    board_b.set_viruses_speed(speed);  
 }
 
 //obsługa bonusu nr 9
@@ -195,17 +184,29 @@ void Bonus::bonus_ten()
     //
 }
 
-
-
-
-//zwraca prawdę jeśli jest lockdown
-bool Bonus::is_lockdown()
-{
-    return lockdown;
-}
-
 //kończy lockdown
 void Bonus::end_lockdown()
 {
     lockdown=false;
 }
+
+
+//--------------------------------------------
+//ZWRACAJĄ INFORMACJE
+
+//zwraca typ bonusu na danym polu
+Bonus_type Bonus::get_type_of_bonus(int row, int col) const
+{
+    if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
+    int nr=board_b.get_number_of_bonus(row,col);
+    int size=bonuses_types.size();
+    if((nr<0)or(nr>size)) return NONE;
+    return bonuses_types[nr];
+}
+
+//zwraca prawdę jeśli jest lockdown
+bool Bonus::is_lockdown() const
+{
+    return lockdown;
+}
+

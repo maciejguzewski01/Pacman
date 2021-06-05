@@ -10,8 +10,11 @@ Pacman::Pacman(std::string name) : name(name)
     move_to=EAST;
 }
 
+//----------------------------------------
+//FUNKCJE MODYFIKUJĄCE CECHY PACMANA
 
-//aktualizuje pozycję 
+
+//aktualizuje pozycję pacmana w zależności od danego argumentem kierunku  
 void Pacman::move(Move_direction direction)
 {
     move_to=direction;
@@ -20,24 +23,44 @@ void Pacman::move(Move_direction direction)
     else if(direction==SOUTH) position=position+sf::Vector2f(0,1);
     else if(direction==WEST) position=position+sf::Vector2f(-1,0);
     else if(direction==EAST) position=position+sf::Vector2f(1,0);
-   
 }
 
-//zwraca imię pacmana
-std::string Pacman::get_name() const 
+//zmniejsza ilość żyć
+void Pacman::remove_live()
 {
-    return name;
+    lives--;
 }
 
-//zwraca współrzędne na których znajduje się pacman
-sf::Vector2f Pacman::get_position() const 
+//ustawia pacmana na danej pozycji
+void Pacman::set_position_to(int row,int col) 
 {
-    return position;
+    if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
+   position=sf::Vector2f(row,col);
 }
 
+//ustawia ilość żyć na daną ilość 
+void Pacman::set_lives_number(int number) 
+{
+    lives=number;
+}
 
-//zwraca lokalziację następnego pola na ktorym znajdzie się pacman idąc w danym kierunku
-sf::Vector2f Pacman::get_next_field_location(Move_direction direction)
+//------------------------------------------
+//FUNKCJE ZWRACAJĄCE INFORMACJE O PACMANIE 
+
+//zwraca kierunek ruchu pacmana
+Move_direction Pacman::get_move_to() const
+{
+    return move_to;
+}
+
+//zwraca prędkość pacmana
+double Pacman::get_pacman_speed() const
+{
+    return speed;
+}
+
+//zwraca lokalizację następnego pola na ktorym znajdzie się pacman idąc w danym kierunku
+sf::Vector2f Pacman::get_next_field_location(Move_direction direction) const
 {
     if(direction==NORTH) return position+sf::Vector2f(0,-1);
     else if(direction==SOUTH) return position+sf::Vector2f(0,1);
@@ -49,40 +72,20 @@ sf::Vector2f Pacman::get_next_field_location(Move_direction direction)
 
 
 //zwraca ilość pozostałych żyć
-int Pacman::get_lives_number()
+int Pacman::get_lives_number() const
 {
     return lives;
 }
 
 
-//zwraca prędkość pacmana
-double Pacman::get_pacman_speed()
+//zwraca imię pacmana
+std::string Pacman::get_name() const 
 {
-    return speed;
+    return name;
 }
 
-//zmniejsza ilość żyć
-void Pacman::remove_live()
+//zwraca współrzędne na których znajduje się pacman
+sf::Vector2f Pacman::get_position() const 
 {
-    lives--;
-}
-
-//ustawia pacmana na danej pozycji
-void Pacman::set_position_to(int row,int col)
-{
-    if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
-   position=sf::Vector2f(row,col);
-}
-
-//zwraca kierunek ostatniego ruchu pacmana
-Move_direction Pacman::get_move_to()
-{
-    return move_to;
-}
-
-
-//ustawia ilość żyć na daną ilość 
-void Pacman::set_lives_number(int number)
-{
-    lives=number;
+    return position;
 }

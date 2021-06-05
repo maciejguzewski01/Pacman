@@ -1,6 +1,5 @@
 #include "Start.h"
 
-
 //konstruktor 
 Start::Start()
 {
@@ -80,13 +79,14 @@ Start::Start()
 
    smoke_two_t.loadFromFile("../resources/smoke_two.png");
    smoke_two.setTexture(smoke_two_t);
-   smoke_two.setScale(1,1);
-
-
-   
+   smoke_two.setScale(1,1);   
 }
 
 
+//----------------------------------------
+//FUNKCJE RYSUJĄCE 
+
+//przekazywanie rysowania do odpowiednich funkcji 
 void Start::draw(sf::RenderWindow & win)
 {
     if(end==true) win.close();
@@ -97,8 +97,6 @@ void Start::draw(sf::RenderWindow & win)
    else if(state==INSTRUCTION_ONE) draw_instruction_one_state(win);
    else if(state==INSTRUCTION_TWO) draw_instruction_two_state(win);
 }
-
-
 
 //wyświetla ekran powitalny 
 void Start::draw_hello_state(sf::RenderWindow & win)
@@ -317,9 +315,6 @@ void Start::draw_instruction_one_state(sf::RenderWindow & win)
 
     smoke.setPosition(0,10);
     win.draw(smoke);
-
- 
-
 }
 
 
@@ -369,6 +364,9 @@ void Start::draw_instruction_two_state(sf::RenderWindow & win)
 }
 
 
+//-------------------------------------------------
+//OBSŁUGA ZDARZEŃ
+
 //obsługa kliknięć myszką 
 void Start::mouse_was_pressed(sf::Event event)
 {
@@ -378,10 +376,7 @@ void Start::mouse_was_pressed(sf::Event event)
     else if(state==NAME) mouse_name_state(event);
     else if(state==INSTRUCTION_ONE) mouse_instruction_one_state(event);
     else if(state==INSTRUCTION_TWO) mouse_instruction_two_state(event);
-
 }
-
-
 
 //obsługa kliknięć myszką w trybie HELLO 
 void Start::mouse_hello_state(sf::Event event)
@@ -395,7 +390,6 @@ void Start::mouse_hello_state(sf::Event event)
     state=LEVEL;
   }
 }
-
 
 //obsługa kliknięć myszką w trybie HELLO 
 void Start::mouse_level_state(sf::Event event)
@@ -422,7 +416,6 @@ void Start::mouse_level_state(sf::Event event)
   }
 
 }
-
 
 //obsługa kliknięć myszką w trybie BOARD_TYPE 
 void Start::mouse_board_type_state(sf::Event event)
@@ -500,7 +493,6 @@ void Start::mouse_instruction_two_state(sf::Event event)
 
   int x=event.mouseButton.x;
   int y=event.mouseButton.y;
-  
 
    if((x>180)and(x<530)and(y>300)and(y<350))
   {
@@ -508,9 +500,10 @@ void Start::mouse_instruction_two_state(sf::Event event)
   }
 }
 
-
+//obsługa wpisywania tekstu 
 void Start::text_was_entered(sf::Event event)
 {
+    if(state!=NAME) return;
  char help=event.text.unicode;
  if((event.key.code=='\b')and(choosed_name.length()>0)) 
  {
@@ -520,21 +513,24 @@ void Start::text_was_entered(sf::Event event)
  choosed_name=choosed_name+help;
 }
 
+//----------------------------------------
+//ZWRACANIE USTALONYCH INFORMACJI 
+
 
 //zwraca wybrany poziom
-Level_name Start::get_choosed_level()
+Level_name Start::get_choosed_level() const
 {
    return choosed_level;
 }
 
 //zwraca wybraną planszę 
-Board_order Start::get_choosed_board()
+Board_order Start::get_choosed_board() const
 {
    return choosed_board;
 }
 
 //zwraca wybraną nazwę
-std::string Start::get_choosed_name()
+std::string Start::get_choosed_name() const
 {
    return choosed_name;
 }

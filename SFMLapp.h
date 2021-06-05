@@ -11,6 +11,8 @@
 #include <cstring>
 #include <vector>
 
+//Odpowiada za wyświetlanie graficzne aplikacji 
+
 enum SFML_state {INTRODUCTION,GAME,BONUS,DIED,RESULTS};
 
 class SFMLapp
@@ -98,7 +100,7 @@ void draw_bonus(int row,int col, sf::RenderWindow & win);
     explicit SFMLapp(Pacman & pacman_sfml, Board & board_sfml,Bonus & bonus_sfml, Manager & manager_sfml);
 
     void draw(sf::RenderWindow & win);
-    SFML_state get_sfml_app_state();
+    SFML_state get_sfml_app_state() const;
     void end_bonus();
     void set_app_state(SFML_state new_state);
     void end_game();

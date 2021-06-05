@@ -4,11 +4,11 @@
 //konstruktor 
 Coronavirus::Coronavirus(int nr): number(nr)
 {
-    position=sf::Vector2f(10+number+1,15);//nr wiersza- nr kolumny
-    
+    position=sf::Vector2f(10+number+1,15);
 }
 
-
+//-------------------------------------------------
+//FUNKCJE MODYFIKUJĄCE STAN OBIEKTU 
 
 //aktualizuje pozycję 
 void Coronavirus::move(Move_direction direction)
@@ -20,15 +20,18 @@ void Coronavirus::move(Move_direction direction)
     else exit(-1);
 }
 
-
-//zwraca współrzędne na których znajduje się koronawirus
-sf::Vector2f Coronavirus::get_position() const
+//ustawia wirusa na danej pozycji
+void Coronavirus::set_position_to(int row,int col)
 {
-    return position;
+    if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
+    position=sf::Vector2f(row,col);
 }
 
+//-------------------------------------------------
+//FUNKCJE ZWRACAJĄCE INFORMACJE O WIRUSIE 
+
 //zwraca lokalizację następnego pola na ktorym znajdzie się koronawirus idąc w danym kierunku
-sf::Vector2f Coronavirus::get_next_field_location(Move_direction direction)
+sf::Vector2f Coronavirus::get_next_field_location(Move_direction direction) const 
 {
     
     if(direction==NORTH) return position+sf::Vector2f(0,-1);
@@ -38,10 +41,8 @@ sf::Vector2f Coronavirus::get_next_field_location(Move_direction direction)
     exit(-1);
 }
 
-
-//ustawia wirusa na danej pozycji
-void Coronavirus::set_position_to(int row,int col)
+//zwraca współrzędne na których znajduje się koronawirus
+sf::Vector2f Coronavirus::get_position() const
 {
-    if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
-    position=sf::Vector2f(row,col);
+    return position;
 }

@@ -8,12 +8,12 @@ Events::Events(Pacman & pacman_e, Board & board_e,Bonus & bonus_e, Manager & man
 }
 
 
+
+//obsługa sterowania strzałkami 
 void Events::key_was_pressed(sf::Event event)
 {
-     
   if(event.key.code==sf::Keyboard::Left)
   {
-    
     manager_e.play(WEST);
   }
   else if(event.key.code==sf::Keyboard::Right)
@@ -26,16 +26,11 @@ void Events::key_was_pressed(sf::Event event)
   }
   else if(event.key.code==sf::Keyboard::Down)
   {
-     
     manager_e.play(SOUTH);
-   
   }
-   
 }
 
-
-
-
+//wywoływanie odpowiedniej funkcji sterującej obsługującej kliknięcia myszką
 void Events::mouse_was_pressed(sf::Event event)
 {
   if(sfml_e.get_sfml_app_state()==INTRODUCTION) mouse_intro(event);
@@ -103,7 +98,6 @@ void Events::mouse_results(sf::Event event)
 
   if((x>275)and(x<525)and(y>530)and(y<580))
   {
-     
       sfml_e.end_game();
   }
 }

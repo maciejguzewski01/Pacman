@@ -13,25 +13,16 @@
 #include "Events.h"
 #include "Bonus.h"
 
-
-
-
-
-
 int main()
 {
     srand(time(0));
    
-    
-
-    std::cout<<"HELLO WORLD!"<<std::endl;
-
-sf::RenderWindow window(sf::VideoMode(800, 600), "TEST");
+sf::RenderWindow window(sf::VideoMode(800, 600), "PACMAN");
 window.setVerticalSyncEnabled(false);
 window.setFramerateLimit(100);
 
 
-sf::RenderWindow window_start(sf::VideoMode(800, 600), "START");
+sf::RenderWindow window_start(sf::VideoMode(800, 600), "PACMAN");
 window_start.setVerticalSyncEnabled(false);
 window_start.setFramerateLimit(5);
 
@@ -68,19 +59,17 @@ while (window_start.isOpen())
 
 Pacman pacman_test(start_test.get_choosed_name());
    
-    Board board_test(pacman_test,start_test.get_choosed_level(),start_test.get_choosed_board());
+Board board_test(pacman_test,start_test.get_choosed_level(),start_test.get_choosed_board());
     
-    Bonus bonus_test(pacman_test,board_test);
+Bonus bonus_test(pacman_test,board_test);
    
-    Manager manager_test(pacman_test,board_test,bonus_test);
+Manager manager_test(pacman_test,board_test,bonus_test);
 
-    SFMLapp sfml_test(pacman_test,board_test,bonus_test,manager_test);
+SFMLapp sfml_test(pacman_test,board_test,bonus_test,manager_test);
 
-    Events events_test(pacman_test,board_test,bonus_test,manager_test,sfml_test);
+Events events_test(pacman_test,board_test,bonus_test,manager_test,sfml_test);
 
-
-
-     while (window.isOpen())
+while (window.isOpen())
     {
         sf::Event event;
         while (window.pollEvent(event))

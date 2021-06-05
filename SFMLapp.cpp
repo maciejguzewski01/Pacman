@@ -106,6 +106,8 @@ txt2.setFillColor(sf::Color::Black);
 
 }
 
+//----------------------------------------
+//FUNKCJE RYSUJĄCE
 
 //funkcja rysująca planszę 
 void SFMLapp::draw_board(sf::RenderWindow & win)
@@ -234,8 +236,6 @@ void SFMLapp::draw(sf::RenderWindow & win)
          ++n;
        }   
   }
-    
-    
 }
 
 //rysowanie widoku INTRODUCTION
@@ -812,11 +812,9 @@ void SFMLapp::draw_bonus_ten_info(sf::RenderWindow & win)
 }
 
 
-//zwraca stan aplikacji
-SFML_state SFMLapp::get_sfml_app_state()
-{
-    return state;
-}
+//------------------------
+//INNE FUNKCJE
+
 
 //kończt wyświetlanie bonusów
 void SFMLapp::end_bonus()
@@ -835,4 +833,10 @@ void SFMLapp::set_app_state(SFML_state new_state)
 void SFMLapp::end_game()
 {
    end=true;
+}
+
+//zwraca stan aplikacji
+SFML_state SFMLapp::get_sfml_app_state() const
+{
+    return state;
 }

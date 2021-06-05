@@ -8,6 +8,12 @@
 #include <iostream>
 #include <vector>
 
+//klasa obsługjąca bonusy 
+/* Zadania;
+1. generuje typy bonusów 
+2. zwraca typ aktywnego bonusu 
+3. obsługuje bonusy 
+*/
 enum Bonus_type{NONE,SCHOOL,PLANE,BORDER,BRITAIN,RESPIRATOR,LOCKDOWN,SUMMER,LITE_LOCKDOWN,DEATH,ANTIVAXXERS };
 
 class Bonus
@@ -16,6 +22,7 @@ class Bonus
     Board & board_b;
     std::vector<Bonus_type> bonuses_types;
     std::vector<int> randomize_vec;
+  
   Bonus_type rand_type_of_bonus();
   int idx=0;
 
@@ -34,12 +41,13 @@ class Bonus
 
     public:
     explicit Bonus(Pacman & pacman_b, Board & board_b);
-    
-    Bonus_type get_type_of_bonus(int row, int col);
+        
     void bonus_activated(int row, int col);
 
-    bool is_lockdown();
     void end_lockdown();
+    
+    Bonus_type get_type_of_bonus(int row, int col) const;
+    bool is_lockdown() const;
 };
 
 

@@ -11,6 +11,13 @@
 #include "Bonus.h"
 
 
+//Obsługa zdarzeń 
+/* zadania
+1. obsługa wpisywania tekstu 
+2. obsługa myszy 
+3. obsługa sterowania strzałkami
+*/
+
 class Events
 {
    Pacman & pacman_e;

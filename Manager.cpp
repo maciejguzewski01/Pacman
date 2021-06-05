@@ -13,14 +13,13 @@ Manager::Manager(Pacman & pacman_m, Board & board_m,Bonus & bonus_m): pacman_m(p
     {
         viruses_directions.push_back(ANY);
         rand_number_of_moves.push_back(0);
-        steps.push_back(0);
-        
+        steps.push_back(0); 
     }
     generate_first_directions();
-
-    
-    
 }
+
+//-------------------------------------------
+//GENEROWANIE STANU POCZĄTKOWEGO 
 
 //generuje początkowe kierunki wirusów 
 void Manager::generate_first_directions()
@@ -37,23 +36,16 @@ void Manager::generate_first_directions()
     }
 }
 
-//zwraca prawdę jeśli pacman żyje
-bool Manager::is_pacman_alive()
-{
-  if(pacman_m.get_lives_number()==0) return false;
-  return true;
-}
-
+//---------------------------------------------
+//STEROWANIE GRĄ
 
 //steruje rozgrywką 
 void Manager::play(Move_direction direction)
 {
-    
     if(is_pacman_alive()==true)
     {
       if(clk_pacman.getElapsedTime().asSeconds()>pacman_m.get_pacman_speed())
-      {
-         
+      {    
        move_pacman( direction);
        clk_pacman.restart();
       }
@@ -74,34 +66,26 @@ void Manager::play(Move_direction direction)
 }
 
 
-
 //zarządza ruchem pacmana
 void Manager::move_pacman(Move_direction direction)
 {
-  
-  
    if(did_pacman_meet_virus()==true)
    {
      if(uniform==false) pacman_meet_virus();
      return;
    } 
        
-
    if(direction==ANY) return;
  
    if(board_m.can_pacman_move(direction)==false) return;
   
    if(board_m.can_pacman_move(direction)==true) pacman_m.move(direction);
     
-  
-
-  
    if(did_pacman_meet_virus()==true)
    {
        if(uniform==false) pacman_meet_virus();
         return;
    }  
-
      sf::Vector2f position=pacman_m.get_position();
      int row=position.y;
      int col=position.x;
@@ -119,12 +103,8 @@ void Manager::move_pacman(Move_direction direction)
         type_of_bonus=bonus_m.get_type_of_bonus( row,  col);
         bonus_m.bonus_activated(row,col);
        board_m.delete_bonus(row,col);
-       do_something(type_of_bonus);
-        
+       do_something(type_of_bonus);   
     }
-
-
-
 }
 
 
@@ -134,7 +114,7 @@ void Manager::do_something(Bonus_type type)
    if(type==SCHOOL)
    {
        int size=board_m.get_number_of_viruses();
-       for(int i=5;i<10;++i)
+       for(int i=0;i<size;++i)
        {
          viruses_directions.push_back(NORTH);
          rand_number_of_moves.push_back(1);
@@ -166,13 +146,12 @@ void Manager::do_something(Bonus_type type)
 }
 
 //sprawdza czy pacman i wirus spotkali się na polu 
-bool Manager::did_pacman_meet_virus()
+bool Manager::did_pacman_meet_virus() const
 {
   sf::Vector2f position=pacman_m.get_position();
   int row=position.y;
   int col=position.x;
   if(board_m.is_any_virus_on_field(row,col)==true) return true;
-  
 
   return false;
 }
@@ -190,72 +169,6 @@ void Manager::pacman_meet_virus()
         pacman_died();
     }
     
-}
-
-
-//wywoływana po (ostatecznej) śmierci pacmana
-void Manager::pacman_died()
-{
-    std::ifstream plik("../wyniki.txt");
-
-  if(!plik)
-  {
-    std::cerr<<"Błąd: "<<strerror(errno)<<std::endl;
-    exit(-1);
-  }
-  
-   while(plik)
-    {
-      results.push_back("");      
-      getline(plik, results[idx]);
-    idx++;
-    }
-   if(results.size()<=10) vec_not_full();
-   else vec_full();
-  
-  plik.close();
-}
-
-//wczytuje wyniki jeśli w pliku nie ma 10 wyników 
-void Manager::vec_not_full()
-{
-   std::ofstream plik("../wyniki.txt");
-
-  if(!plik)
-  {
-    std::cerr<<"Błąd: "<<strerror(errno)<<std::endl;
-    exit(-1);
-  }
-  
-  plik<<pacman_m.get_name()<<" "<<get_score()<<" pkt "<<100*(get_done_vaccine_number())/(board_m.get_total_vaccine_number())<<"% populacji"<<std::endl;
-
-  for(size_t i=0;i<results.size()-1;++i)
-  {
-    plik<<results[i]<<std::endl;
-  }
-
-  plik.close();
-}
-
-//wczytuje wyniki jeśli w pliku jest 10 wyników 
-void Manager::vec_full()
-{
-  std::ofstream plik("../wyniki.txt");
-
-  if(!plik)
-  {
-    std::cerr<<"Błąd: "<<strerror(errno)<<std::endl;
-    exit(-1);
-  }
-  
-  plik<<pacman_m.get_name()<<" "<<get_score()<<" pkt "<<100*(get_done_vaccine_number())/(board_m.get_total_vaccine_number())<<"% populacji"<<std::endl;
-
-  for(size_t i=0;i<9;++i)
-  {
-    plik<<results[i]<<std::endl;
-  }
-
-  plik.close();
 }
 
 //zarządza ruchem wirusów 
@@ -320,47 +233,84 @@ void Manager::randomize(int i)
  }while(board_m.can_virus_move(i,viruses_directions[i])==false);
 }
 
-//zwraca ilość zdobytych punktów
-int Manager::get_score() const
+//-----------------------------------
+//OBSŁUGA ŚMIERCI PACMANA
+
+//wywoływana po (ostatecznej) śmierci pacmana
+void Manager::pacman_died()
 {
-    return score;
-}
+    std::ifstream plik("../wyniki.txt");
+
+  if(!plik)
+  {
+    std::cerr<<"Błąd: "<<strerror(errno)<<std::endl;
+    exit(-1);
+  }
   
-int Manager::get_done_vaccine_number() const
-{
-    return vaccines;
+   while(plik)
+    {
+      results.push_back("");      
+      getline(plik, results[idx]);
+    idx++;
+    }
+   if(results.size()<=10) vec_not_full();
+   else vec_full();
+  
+  plik.close();
 }
 
-bool Manager::get_uniform_state() const
+//wczytuje wyniki jeśli w pliku nie ma 10 wyników 
+void Manager::vec_not_full()
 {
-    return uniform;
+   std::ofstream plik("../wyniki.txt");
+
+  if(!plik)
+  {
+    std::cerr<<"Błąd: "<<strerror(errno)<<std::endl;
+    exit(-1);
+  }
+  plik<<pacman_m.get_name()<<" "<<get_score()<<" pkt "<<100*(get_done_vaccine_number())/(board_m.get_total_vaccine_number())<<"% populacji"<<std::endl;
+
+  for(size_t i=0;i<results.size()-1;++i)
+  {
+    plik<<results[i]<<std::endl;
+  }
+
+  plik.close();
 }
 
-bool Manager::get_is_bonus_state() const
+//wczytuje wyniki jeśli w pliku jest 10 wyników 
+void Manager::vec_full()
 {
-    return is_bonus;
+  std::ofstream plik("../wyniki.txt");
+
+  if(!plik)
+  {
+    std::cerr<<"Błąd: "<<strerror(errno)<<std::endl;
+    exit(-1);
+  }
+  
+  plik<<pacman_m.get_name()<<" "<<get_score()<<" pkt "<<100*(get_done_vaccine_number())/(board_m.get_total_vaccine_number())<<"% populacji"<<std::endl;
+
+  for(size_t i=0;i<9;++i)
+  {
+    plik<<results[i]<<std::endl;
+  }
+
+  plik.close();
 }
 
+
+//-----------------------------------
+//INNE
+
+//kończy bonus
 void Manager::end_bonus()
 {
     is_bonus=false;
 }
 
-Bonus_type Manager::get_active_bonus_type()
-{
-    return type_of_bonus;
-}
-
-//zwraca prawdę jeśli wszystkie szczepionki zjedzone 
- bool Manager::all_vaccine_taken()
- {
-    if(board_m.get_total_vaccine_number()==vaccines) return true;
-    return false;    
- }
-
-
-
- //resetuje zegar clk_lockdown
+//resetuje zegar clk_lockdown
  void Manager::reset_clk_lockdown()
  {
      clk_lockdown.restart();
@@ -372,5 +322,51 @@ Bonus_type Manager::get_active_bonus_type()
      clk_uniform.restart();
  }
 
+//--------------------------------------------
+//FUNKCJE ZWRACAJĄCE INFORMACJE 
 
+
+//zwraca ilość zdobytych punktów
+int Manager::get_score() const
+{
+    return score;
+}
+  
+//zwraca ilość wziętych szcepionek 
+int Manager::get_done_vaccine_number() const
+{
+    return vaccines;
+}
+
+//sprawdza czy pacman "nosi" kombinezon
+bool Manager::get_uniform_state() const
+{
+    return uniform;
+}
+
+//sprawdza czy jest aktywny bonus 
+bool Manager::get_is_bonus_state() const
+{
+    return is_bonus;
+}
+
+//zwraca typ aktywnego bonusu 
+Bonus_type Manager::get_active_bonus_type() const
+{
+    return type_of_bonus;
+}
+
+//zwraca prawdę jeśli wszystkie szczepionki zjedzone 
+bool Manager::all_vaccine_taken() const
+{
+    if(board_m.get_total_vaccine_number()==vaccines) return true;
+    return false;    
+}
+
+//zwraca prawdę jeśli pacman żyje
+bool Manager::is_pacman_alive() const
+{
+  if(pacman_m.get_lives_number()==0) return false;
+  return true;
+}
 
