@@ -97,7 +97,7 @@ void draw_bonus(int row,int col, sf::RenderWindow & win);
    void draw_bonus_ten_info(sf::RenderWindow & win);
 
     public:
-    explicit SFMLapp(Pacman & pacman_sfml, Board & board_sfml,Bonus & bonus_sfml, Manager & manager_sfml);
+    explicit SFMLapp(Pacman & pac, Board & boa,Bonus & bon, Manager & man);
 
     void draw(sf::RenderWindow & win);
     SFML_state get_sfml_app_state() const;

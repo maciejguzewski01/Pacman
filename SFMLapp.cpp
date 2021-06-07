@@ -3,7 +3,7 @@
 #include <string>
 
 //konstruktor 
-SFMLapp::SFMLapp(Pacman & pacman_sfml, Board & board_sfml,Bonus & bonus_sfml, Manager & manager_sfml): pacman_sfml(pacman_sfml), board_sfml(board_sfml), bonus_sfml(bonus_sfml), manager_sfml(manager_sfml)
+SFMLapp::SFMLapp(Pacman & pac, Board & boa,Bonus & bon, Manager & man): pacman_sfml(pac), board_sfml(boa), bonus_sfml(bon), manager_sfml(man)
 {
 
    state=INTRODUCTION;
@@ -109,6 +109,35 @@ txt2.setFillColor(sf::Color::Black);
 //----------------------------------------
 //FUNKCJE RYSUJĄCE
 
+
+//funkcja rysująca
+void SFMLapp::draw(sf::RenderWindow & win)
+{
+    
+
+    if(state==INTRODUCTION) draw_introduction(win);
+    if(manager_sfml.get_is_bonus_state()==true) state=BONUS; 
+
+    if(state==BONUS) draw_bonus_info(win);
+    else if(state==GAME)
+    {
+        draw_board(win);
+        manager_sfml.play(ANY);
+    }
+    else if(state==DIED) draw_game_over(win);
+    else if(state==RESULTS) draw_game_results(win);
+          
+  
+  if(n==0)
+  {
+      if((manager_sfml.is_pacman_alive()==false)or(manager_sfml.all_vaccine_taken()==true))
+      {
+         state=DIED;
+         ++n;
+       }   
+  }
+}
+
 //funkcja rysująca planszę 
 void SFMLapp::draw_board(sf::RenderWindow & win)
 {
@@ -212,31 +241,7 @@ void SFMLapp::pacman_icon_movment()
 
 }
 
-//funkcja rysująca
-void SFMLapp::draw(sf::RenderWindow & win)
-{
-    if(state==INTRODUCTION) draw_introduction(win);
-    if(manager_sfml.get_is_bonus_state()==true) state=BONUS; 
 
-    if(state==BONUS) draw_bonus_info(win);
-    else if(state==GAME)
-    {
-        draw_board(win);
-        manager_sfml.play(ANY);
-    }
-    else if(state==DIED) draw_game_over(win);
-    else if(state==RESULTS) draw_game_results(win);
-          
-  
-  if(n==0)
-  {
-      if((manager_sfml.is_pacman_alive()==false)or(manager_sfml.all_vaccine_taken()==true))
-      {
-         state=DIED;
-         ++n;
-       }   
-  }
-}
 
 //rysowanie widoku INTRODUCTION
 void SFMLapp::draw_introduction(sf::RenderWindow & win)

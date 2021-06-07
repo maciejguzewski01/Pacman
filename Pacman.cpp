@@ -2,7 +2,7 @@
 #include <iostream>
 
 //konstruktor 
-Pacman::Pacman(std::string name) : name(name)
+Pacman::Pacman(std::string pac_name) : name(pac_name)
 {
     position=sf::Vector2f(1,1);
     lives=3;

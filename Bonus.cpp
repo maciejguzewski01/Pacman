@@ -2,7 +2,7 @@
 #include <iostream>
 
 //konstruktor 
-Bonus::Bonus(Pacman & pacman_b, Board & board_b): pacman_b(pacman_b), board_b(board_b)
+Bonus::Bonus(Pacman & pac, Board & boa): pacman_b(pac), board_b(boa)
 {
     std::vector <sf::Vector2f> bonuses=board_b.get_bonus_vec();
     for(size_t i=0;i<bonuses.size();++i)
@@ -23,11 +23,6 @@ Bonus_type Bonus::rand_type_of_bonus()
     int number=rand()%10+1;
     bool already_was=false;
    
-   if(idx==0)
-   {
-       number=2;
-       idx++;
-   }
 
    do{
        already_was=false;

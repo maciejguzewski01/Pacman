@@ -46,6 +46,10 @@ while (window_start.isOpen())
             {
               start_test.text_was_entered(event);
             }       
+            else if(event.type == sf::Event::KeyPressed) 
+              {
+                start_test.key_was_pressed(event);
+              }
            
         }    
         window_start.clear(sf::Color(209,162,6));

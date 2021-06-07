@@ -56,7 +56,7 @@ class Board
     
 
     public:
-    explicit Board(Pacman & pacman_b, Level_name level,Board_order choosed_board);
+    explicit Board(Pacman & pac, Level_name lev,Board_order boa);
     
    
     //funkcje modyfikujące stan obiektu 

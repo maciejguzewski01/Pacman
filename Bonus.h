@@ -24,7 +24,6 @@ class Bonus
     std::vector<int> randomize_vec;
   
   Bonus_type rand_type_of_bonus();
-  int idx=0;
 
     void bonus_one();
     void bonus_two();
@@ -40,7 +39,7 @@ class Bonus
     bool lockdown=false;
 
     public:
-    explicit Bonus(Pacman & pacman_b, Board & board_b);
+    explicit Bonus(Pacman & pac, Board & boa);
         
     void bonus_activated(int row, int col);
 

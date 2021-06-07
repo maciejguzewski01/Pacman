@@ -5,7 +5,7 @@
 
 
 //konstruktor 
-Manager::Manager(Pacman & pacman_m, Board & board_m,Bonus & bonus_m): pacman_m(pacman_m), board_m(board_m), bonus_m(bonus_m)
+Manager::Manager(Pacman & pac, Board & boa,Bonus & bon): pacman_m(pac), board_m(boa), bonus_m(bon)
 {
     score=0;
     

@@ -24,7 +24,7 @@ class Pacman
   Move_direction move_to;
 
   public:
-  explicit Pacman(std::string name);
+  explicit Pacman(std::string pac_name);
 
  //Funkcje modyfikujące cechy obiektu 
   void set_position_to(int row,int col);

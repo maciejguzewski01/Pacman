@@ -2,7 +2,7 @@
 #include <iostream>
 
 //konstruktor
-Events::Events(Pacman & pacman_e, Board & board_e,Bonus & bonus_e, Manager & manager_e,SFMLapp & sfml_e): pacman_e(pacman_e), board_e(board_e),bonus_e(bonus_e), manager_e(manager_e), sfml_e(sfml_e) 
+Events::Events(Pacman & pac, Board & boa,Bonus & bon,Manager & man,SFMLapp & sfml): pacman_e(pac), board_e(boa),bonus_e(bon), manager_e(man), sfml_e(sfml) 
 {
     
 }
@@ -12,6 +12,13 @@ Events::Events(Pacman & pacman_e, Board & board_e,Bonus & bonus_e, Manager & man
 //obsługa sterowania strzałkami 
 void Events::key_was_pressed(sf::Event event)
 {
+    if(sfml_e.get_sfml_app_state()!=GAME)
+    {
+        was_enter_pressed(event);
+        return;
+    } 
+
+  
   if(event.key.code==sf::Keyboard::Left)
   {
     manager_e.play(WEST);
@@ -28,6 +35,21 @@ void Events::key_was_pressed(sf::Event event)
   {
     manager_e.play(SOUTH);
   }
+}
+
+
+//jeśli wciśnięto enter przełącza aplikację do nastepnego trybu (jeśli to możliwe)
+void Events::was_enter_pressed(sf::Event event)
+{
+   if(event.key.code!=sf::Keyboard::Enter) return;
+
+   if(sfml_e.get_sfml_app_state()==INTRODUCTION) sfml_e.set_app_state(GAME);
+   else if(sfml_e.get_sfml_app_state()==BONUS) 
+   {
+     manager_e.end_bonus();
+      sfml_e.end_bonus();
+   }
+   else if(sfml_e.get_sfml_app_state()==DIED) sfml_e.set_app_state(RESULTS);
 }
 
 //wywoływanie odpowiedniej funkcji sterującej obsługującej kliknięcia myszką

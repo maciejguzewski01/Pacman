@@ -2,7 +2,7 @@
 #include <iostream>
 
 //konstruktor 
-Board::Board(Pacman & pacman_b, Level_name level, Board_order choosed_board): pacman_b(pacman_b),level(level), choosed_board(choosed_board)
+Board::Board(Pacman & pac, Level_name lev, Board_order boa): pacman_b(pac),level(lev), choosed_board(boa)
 {
     virues_speed=0.2;
     
@@ -409,16 +409,14 @@ bool Board::can_virus_move(int number,Move_direction direction) const
 bool Board::is_wall_on_field(int row,int col) const
 {
  if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
- if(fields[row][col].has_wall==true) return true;
- return false;
+ return fields[row][col].has_wall;
 }
 
 //sprawdza czy na danym polu jest szczepionka
 bool Board::is_vaccine_on_field(int row,int col) const
 {
     if((row<0)or(row>29)or(col<0)or(col>39)) exit(-1);
-   if(fields[row][col].has_vaccine==true) return true;
-   return false;
+   return fields[row][col].has_vaccine;
 }
 
 //sprawdza czy na danym polu jest pacman

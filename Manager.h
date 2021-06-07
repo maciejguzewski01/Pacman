@@ -62,7 +62,7 @@ class Manager
 
 
   public:
-  explicit Manager(Pacman & pacman_m,Board & board_m,Bonus & bonus_m);
+  explicit Manager(Pacman & pac,Board & boa,Bonus & bon);
   
   void play(Move_direction direction);
 

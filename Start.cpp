@@ -367,6 +367,17 @@ void Start::draw_instruction_two_state(sf::RenderWindow & win)
 //-------------------------------------------------
 //OBSŁUGA ZDARZEŃ
 
+//obsługa klawiszy
+//obsługa sterowania strzałkami 
+void Start::key_was_pressed(sf::Event event)
+{
+   if(event.key.code!=sf::Keyboard::Enter) return;
+
+   if(state==HELLO) state=LEVEL;
+   else if(state==INSTRUCTION_ONE) state=INSTRUCTION_TWO;
+   else if(state==INSTRUCTION_TWO) end=true;
+}
+
 //obsługa kliknięć myszką 
 void Start::mouse_was_pressed(sf::Event event)
 {
@@ -510,6 +521,13 @@ void Start::text_was_entered(sf::Event event)
      choosed_name=choosed_name.erase(choosed_name.length()-1,1);
      return;
  }
+ if((event.key.code==13)and(choosed_name.length()>0))
+ {
+     state=INSTRUCTION_ONE;
+     return;
+    
+ }
+ 
  choosed_name=choosed_name+help;
 }
 

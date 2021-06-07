@@ -75,6 +75,7 @@ class Start
     void draw(sf::RenderWindow & win);
     void mouse_was_pressed(sf::Event event);
     void text_was_entered(sf::Event event);
+    void key_was_pressed(sf::Event event);
     
     Level_name get_choosed_level() const;
     Board_order get_choosed_board() const;
